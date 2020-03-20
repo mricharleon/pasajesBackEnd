@@ -1,0 +1,61 @@
+{% extends 'layout.jinja2' %}
+
+{% block subtitle %}{{page}} - {% endblock subtitle %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="display-4">Bienvenido al API de Pasajes!</h1>
+    <p class="lead">
+        BackEnd del proyecto <strong>Pasajes!</strong> desarrollado con <strong>Pyramid.</strong>
+    </p>
+    <a href="https://github.com/mricharleon" class="badge badge-secondary">Proyecto en GitHub</a>
+    <hr class="my-4">
+    <div class="container">
+        <strong class="endpoints">Recursos (EndPoints)</strong>
+        <ul>
+            <li>
+                <strong>Cooperativas</strong><br>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>
+                                <a href="#">POST /api/cooperativa</a><br/>
+                            </th>
+                            <td>Crea una cooperativa</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <a href="#">GET /api/cooperativas</a><br/>
+                            </th>
+                            <td>Obtiene todas las cooperativas</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <a href="#">GET /api/cooperativa/{id}</a><br/>
+                            </th>
+                            <td>Obtiene una sola cooperativa</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <a href="#">PUT /api/cooperativa/{id}</a><br/>
+                            </th>
+                            <td>Actualiza una cooperativa</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <a href="#">DELETE /api/cooperativa/{id}</a><br/>
+                            </th>
+                            <td>Elimina una cooperativa</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>
+                <strong>Rutas</strong><br>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,8 +1,8 @@
 """init
 
-Revision ID: f70bffdf632f
+Revision ID: 1a9ce5527efc
 Revises: 
-Create Date: 2020-03-20 01:44:44.565865
+Create Date: 2020-03-22 14:40:50.674918
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f70bffdf632f'
+revision = '1a9ce5527efc'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -78,9 +78,11 @@ def upgrade():
     sa.Column('salida', sa.DateTime(), nullable=True),
     sa.Column('llegada', sa.DateTime(), nullable=True),
     sa.Column('precio', sa.Float(), nullable=False),
-    sa.Column('sitio_id', sa.Integer(), nullable=False),
+    sa.Column('origen_sitio_id', sa.Integer(), nullable=False),
+    sa.Column('destino_sitio_id', sa.Integer(), nullable=False),
     sa.Column('unidad_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['sitio_id'], ['sitios.id'], name=op.f('fk_pasajes_sitio_id_sitios')),
+    sa.ForeignKeyConstraint(['destino_sitio_id'], ['sitios.id'], name=op.f('fk_pasajes_destino_sitio_id_sitios')),
+    sa.ForeignKeyConstraint(['origen_sitio_id'], ['sitios.id'], name=op.f('fk_pasajes_origen_sitio_id_sitios')),
     sa.ForeignKeyConstraint(['unidad_id'], ['unidades.id'], name=op.f('fk_pasajes_unidad_id_unidades')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_pasajes'))
     )

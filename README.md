@@ -4,40 +4,48 @@ pasajes
 Getting Started
 ---------------
 
-- Change directory into your newly created project.
+- Clonar el proyecto
+
+    git clone git@github.com:mricharleon/pasajesBackEnd.git
+
+- Ingresar al directorio del proyecto
 
     cd pasajes
 
-- Create a Python virtual environment.
+- Crear un entorno virtual
 
-    python3 -m venv env
+    virtualenv envPasajes --python=python3
 
-- Upgrade packaging tools.
+- Activar entorno virtual
 
-    env/bin/pip install --upgrade pip setuptools
+    source envPasajes/bin/activate
 
-- Install the project in editable mode with its testing requirements.
+- Actualizar herramientas
 
-    env/bin/pip install -e ".[testing]"
+    pip install --upgrade pip setuptools
 
-- Initialize and upgrade the database using Alembic.
+- Instalar el proyecto
 
-    - Generate your first revision.
+    pip install -e ".[testing]"
 
-        env/bin/alembic -c development.ini revision --autogenerate -m "init"
+- Configurar archivo <production.ini>
 
-    - Upgrade to that revision.
+    sqlalchemy.url = postgresql://USERDB:PASSWORD@HOST:PORT/NAMEDB
 
-        env/bin/alembic -c development.ini upgrade head
+- Inicializar y actualizar la base de datos usando alembic
 
-- Load default data into the database using a script.
+    - Generar la primera revision
 
-    env/bin/initialize_pasajes_db development.ini
+        alembic -c production.ini revision --autogenerate -m "init"
 
-- Run your project's tests.
+    - Actualizar 
 
-    env/bin/pytest
+        alembic -c production.ini upgrade head
 
-- Run your project.
+- Cargar data por defecto 
 
-    env/bin/pserve development.ini
+    initialize_pasajes_db production.ini
+
+- Ejecutar el proyecto
+
+    pserve production.ini

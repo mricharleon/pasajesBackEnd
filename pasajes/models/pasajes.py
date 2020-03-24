@@ -21,17 +21,21 @@ class Pasaje(Base):
     llegada = Column(DateTime, default=datetime.datetime.utcnow)
     precio = Column(Float, nullable=False)
 
-    sitio_id = Column(Integer, ForeignKey('sitios.id'), nullable=False)
-    origen = relationship('Sitio', backref=backref('pasaje_origen', uselist=False))
+    origen_sitio_id = Column(Integer, ForeignKey('sitios.id'), nullable=False)
+    origen = relationship('Sitio', backref=backref('pasaje_origen', uselist=False), foreign_keys=[origen_sitio_id])
     
-    sitio_id = Column(Integer, ForeignKey('sitios.id'), nullable=False)
-    destino = relationship('Sitio', backref=backref('pasaje_destino', uselist=False))
+    destino_sitio_id = Column(Integer, ForeignKey('sitios.id'), nullable=False)
+    destino = relationship('Sitio', backref=backref('pasaje_destino', uselist=False),  foreign_keys=[destino_sitio_id])
 
     unidad_id = Column(ForeignKey('unidades.id'), nullable=False)
     unidad = relationship('Unidad', backref='unidad_pasajes')
 
     def __json__(self, request):
-        return {'salida':self.salida,
-                'llegada':self.llegada,
+        return {'id':self.id,
+                'salida':self.salida.isoformat(),
+                'llegada':self.llegada.isoformat(),
                 'precio':self.precio,
-                'id':self.id}
+                'origen':self.origen,
+                'destino':self.destino,
+                'unidad':self.unidad
+                }

@@ -22,5 +22,7 @@ class Unidad(Base):
     cooperativa = relationship('Cooperativa', backref='cooperativa_unidades')
 
     def __json__(self, request):
-        return {'numero_asientos':self.numero_asientos,
-                'id':self.id}
+        return {'id':self.id,
+                'numero_asientos':self.numero_asientos,
+                'clase':self.clase,
+                'cooperativa':self.cooperativa}

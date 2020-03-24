@@ -31,14 +31,10 @@ def jsonDefault(object):
 @view_config(route_name='view_api',
              renderer='../templates/api.jinja2')
 def view_api(request):
-    # next_url = request.route_url('view_page', pagename='FrontPage')
     page = 'API'
     content = 'contenido'
     edit_url = 'url de edicion'
-    paginas = RepositorioPasaje.all_pasajes(request)
-    usuarios = RepositorioUsario.all_usuarios(request)
-    return dict(page=page, content=content, edit_url=edit_url, paginas=paginas, usuarios=usuarios)
-    # return HTTPFound(location=next_url)
+    return dict(page=page, content=content)
 
 @view_config(route_name='view_page', renderer='../templates/view.jinja2',
              permission='view')
@@ -58,10 +54,10 @@ def view_page(request):
     content = publish_parts(page.data, writer_name='html')['html_body']
     content = wikiwords.sub(add_link, content)
     edit_url = request.route_url('edit_page', pagename=page.name)
-    paginas = RepositorioPasaje.all_pasajes(request)
-    usuarios = RepositorioUsario.all_usuarios(request)
+    # paginas = RepositorioPasaje.all_pasajes(request)
+    # usuarios = RepositorioUsario.all_usuarios(request)
     
-    return dict(page=page, content=content, edit_url=edit_url, paginas=paginas, usuarios=usuarios)
+    return dict(page=page, content=content, edit_url=edit_url)
 
 @view_config(route_name='edit_page', renderer='../templates/edit.jinja2',
              permission='edit')

@@ -92,11 +92,11 @@ def setup_models(dbsession):
     dbsession.add(loja_cuenca)
 
     # Boleto
-    boleto_1 = models.Boleto(numero_asientos='1,2,3', user=basic, pasaje=loja_quito_1)
+    boleto_1 = models.Boleto(numero_asientos=2, precio_total=10.5, user=basic, pasaje=loja_quito_1)
     dbsession.add(boleto_1)
-    boleto_2 = models.Boleto(numero_asientos='15,16', user=basic, pasaje=loja_guayaquil)
+    boleto_2 = models.Boleto(numero_asientos=3, precio_total=12.5, user=basic, pasaje=loja_guayaquil)
     dbsession.add(boleto_2)
-    boleto_3 = models.Boleto(numero_asientos='25', user=basic, pasaje=loja_cuenca)
+    boleto_3 = models.Boleto(numero_asientos=25, precio_total=15, user=basic, pasaje=loja_cuenca)
     dbsession.add(boleto_3)
 
 

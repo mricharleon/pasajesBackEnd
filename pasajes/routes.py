@@ -32,6 +32,8 @@ def includeme(config):
     # Clase
     config.add_route('get_clases',
                      '/api/clases')
+    config.add_route('add_clase',
+                     '/api/clase')
     # Unidad
     config.add_route('get_unidades',
                      '/api/unidades')
@@ -47,6 +49,8 @@ def includeme(config):
                      '/api/boletos/{id_usuario}',)
     config.add_route('get_boleto',
                      '/api/boleto/{id_boleto}')
+    config.add_route('add_boleto',
+                     'api/boleto2')
     
 
     # Solo quedan como respaldo
@@ -55,6 +59,8 @@ def includeme(config):
                      factory=new_page_factory)
     config.add_route('edit_page', '/{pagename}/edit_page',
                      factory=page_factory)
+
+
 
 def new_page_factory(request):
     pagename = request.matchdict['pagename']

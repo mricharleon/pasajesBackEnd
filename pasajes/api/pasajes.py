@@ -11,7 +11,10 @@ class RepositorioPasaje:
     def all_pasajes(cls, request, fecha, origen, destino):
         fromDate = datetime.strptime(fecha, '%Y-%m-%d')
         toDate = datetime.strptime(fecha, '%Y-%m-%d') + timedelta(days=1)
-        query_pasajes = request.dbsession.query(Pasaje).filter(Pasaje.salida.between(fromDate, toDate)).all()
+        query_pasajes = request.dbsession.query(Pasaje).filter(Pasaje.salida.between(fromDate, toDate))\
+                                                       .filter(Pasaje.origen_sitio_id == origen)\
+                                                       .filter(Pasaje.destino_sitio_id == destino)\
+                                                       .all()
 
         return query_pasajes
     

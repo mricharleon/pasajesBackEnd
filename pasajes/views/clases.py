@@ -8,3 +8,9 @@ from .. api.clases import RepositorioClase
 def clases_api(request):
     clases = RepositorioClase.all_clases(request)
     return clases
+
+@view_config(route_name='add_clase',
+             renderer='json',
+             request_method='POST')
+def add_clase_api(request):
+    return 'okk'

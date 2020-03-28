@@ -54,4 +54,4 @@ def add_boleto_api(request):
             'msg': 'Error, Boleto no registrado!',
             'status': '422',
         }
-    return 'response'
+    return response

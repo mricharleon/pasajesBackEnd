@@ -1,4 +1,8 @@
 from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPFound
+
+# Modelos
+from .. import models
 
 # Servicios
 from .. api.pasajes import RepositorioPasaje
@@ -34,5 +38,26 @@ def get_pasaje_api(request):
              request_method='PUT',
              renderer='json')
 def add_edit_pasaje_api(request):
-    print(request.json_body)
-    return 'Ok'
+    data = request.json_body
+    pasaje = RepositorioPasaje.get_pasaje(request, data['id'])
+
+    pasaje.salida = data.get('salida')
+    pasaje.llegada = data.get('llegada')
+    pasaje.precio = data.get('precio')
+    pasaje.asientos_disponibles = data.get('asientos_disponibles')
+    pasaje.origen_sitio_id = data.get('origen').get('id')
+    pasaje.destino_sitio_id = data.get('destino').get('id')
+    pasaje.unidad_id = data.get('unidad').get('id')
+
+    if request.dbsession.add(pasaje) == None:
+        response = {
+            'msg': 'Pasaje editado correctamente!',
+            'status': '200',
+        }
+    else:
+        response = {
+            'msg': 'Error, Pasaje no guardado!',
+            'status': '422',
+        }
+
+    return response

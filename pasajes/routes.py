@@ -47,7 +47,7 @@ def includeme(config):
     config.add_route('get_pasaje',
                      '/api/pasaje/{id_pasaje}')
     config.add_route('add_edit_pasaje',
-                     '/api/pasaje/edit')
+                     '/api/pasaje/edit/{id_pasaje}')
     # Boletos
     config.add_route('get_boletos',
                      '/api/boletos/{id_usuario}',)

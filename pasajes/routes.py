@@ -40,10 +40,14 @@ def includeme(config):
     config.add_route('get_unidad',
                      '/api/unidad/{id_unidad}')
     # Pasajes
+    config.add_route('get_all_pasajes',
+                     '/api/all/pasajes')
     config.add_route('get_pasajes',
                      '/api/pasajes/{fecha}/{origen}/{destino}')
     config.add_route('get_pasaje',
                      '/api/pasaje/{id_pasaje}')
+    config.add_route('add_edit_pasaje',
+                     '/api/pasaje/edit')
     # Boletos
     config.add_route('get_boletos',
                      '/api/boletos/{id_usuario}',)

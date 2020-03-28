@@ -8,6 +8,12 @@ from dateutil.parser import parse
 class RepositorioPasaje:
     
     @classmethod
+    def get_all_pasajes(cls, request):
+        query_pasajes = request.dbsession.query(Pasaje).filter().order_by(Pasaje.origen_sitio_id).all()
+
+        return query_pasajes
+
+    @classmethod
     def all_pasajes(cls, request, fecha, origen, destino):
         fromDate = datetime.strptime(fecha, '%Y-%m-%d')
         toDate = datetime.strptime(fecha, '%Y-%m-%d') + timedelta(days=1)

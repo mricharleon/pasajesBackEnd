@@ -14,6 +14,7 @@ class Unidad(Base):
     __tablename__ = 'unidades'
     id = Column(Integer, primary_key=True)
     numero_asientos = Column(Integer, nullable=False)
+    numero_unidad = Column(Integer, nullable=False)
 
     clase_id = Column(Integer, ForeignKey('clases.id'), nullable=False)
     clase = relationship('Clase', backref=backref('unidad', uselist=False))
@@ -24,5 +25,6 @@ class Unidad(Base):
     def __json__(self, request):
         return {'id':self.id,
                 'numero_asientos':self.numero_asientos,
+                'numero_unidad':self.numero_unidad,
                 'clase':self.clase,
                 'cooperativa':self.cooperativa}

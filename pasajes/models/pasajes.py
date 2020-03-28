@@ -20,6 +20,7 @@ class Pasaje(Base):
     salida = Column(DateTime, default=datetime.datetime.utcnow)
     llegada = Column(DateTime, default=datetime.datetime.utcnow)
     precio = Column(Float, nullable=False)
+    asientos_disponibles = Column(Integer, nullable=False)
 
     origen_sitio_id = Column(Integer, ForeignKey('sitios.id'), nullable=False)
     origen = relationship('Sitio', backref=backref('pasaje_origen', uselist=False), foreign_keys=[origen_sitio_id])
@@ -35,6 +36,7 @@ class Pasaje(Base):
                 'salida':self.salida.isoformat(),
                 'llegada':self.llegada.isoformat(),
                 'precio':self.precio,
+                'asientos_disponibles':self.asientos_disponibles,
                 'origen':self.origen,
                 'destino':self.destino,
                 'unidad':self.unidad

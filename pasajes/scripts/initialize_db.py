@@ -54,17 +54,18 @@ def setup_models(dbsession):
     dbsession.add(normal)
 
     # Unidad
-    loja_1 = models.Unidad(numero_asientos=45, clase=vip, cooperativa=cooperativa_loja)
+    loja_1 = models.Unidad(numero_asientos=45, numero_unidad=1, clase=vip, cooperativa=cooperativa_loja)
     dbsession.add(loja_1)
-    cariamanga_1 = models.Unidad(numero_asientos=40, clase=normal, cooperativa=cooperativa_cariamanga)
+    cariamanga_1 = models.Unidad(numero_asientos=40, numero_unidad=1, clase=normal, cooperativa=cooperativa_cariamanga)
     dbsession.add(cariamanga_1)
-    cariamanga_2 = models.Unidad(numero_asientos=45, clase=vip, cooperativa=cooperativa_cariamanga)
+    cariamanga_2 = models.Unidad(numero_asientos=45, numero_unidad=2, clase=vip, cooperativa=cooperativa_cariamanga)
     dbsession.add(cariamanga_2)
 
     # Pasaje
     loja_quito_1 = models.Pasaje(salida=datetime.datetime.utcnow(),
                                llegada=datetime.datetime.utcnow(),
                                precio=20.5,
+                               asientos_disponibles=45,
                                origen=loja,
                                destino=quito,
                                unidad=loja_1)
@@ -72,6 +73,7 @@ def setup_models(dbsession):
     loja_quito_2 = models.Pasaje(salida=datetime.datetime.utcnow(),
                                llegada=datetime.datetime.utcnow(),
                                precio=20,
+                               asientos_disponibles=40,
                                origen=loja,
                                destino=quito,
                                unidad=cariamanga_1)
@@ -79,6 +81,7 @@ def setup_models(dbsession):
     loja_guayaquil = models.Pasaje(salida=datetime.datetime.utcnow(),
                                    llegada=datetime.datetime.utcnow(),
                                    precio=18,
+                                   asientos_disponibles=45,
                                    origen=loja,
                                    destino=guayaquil,
                                    unidad=loja_1)
@@ -86,6 +89,7 @@ def setup_models(dbsession):
     loja_cuenca = models.Pasaje(salida=datetime.datetime.utcnow(),
                                llegada=datetime.datetime.utcnow(),
                                precio=8,
+                               asientos_disponibles=45,
                                origen=loja,
                                destino=cuenca,
                                unidad=cariamanga_2)

@@ -1,8 +1,8 @@
 """init
 
-Revision ID: aa84d34e8b63
+Revision ID: 9ad19b261893
 Revises: 
-Create Date: 2020-03-24 20:18:28.191010
+Create Date: 2020-03-26 11:24:19.292259
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'aa84d34e8b63'
+revision = '9ad19b261893'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -67,6 +67,7 @@ def upgrade():
     op.create_table('unidades',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('numero_asientos', sa.Integer(), nullable=False),
+    sa.Column('numero_unidad', sa.Integer(), nullable=False),
     sa.Column('clase_id', sa.Integer(), nullable=False),
     sa.Column('cooperativa_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['clase_id'], ['clases.id'], name=op.f('fk_unidades_clase_id_clases')),
@@ -78,6 +79,7 @@ def upgrade():
     sa.Column('salida', sa.DateTime(), nullable=True),
     sa.Column('llegada', sa.DateTime(), nullable=True),
     sa.Column('precio', sa.Float(), nullable=False),
+    sa.Column('asientos_disponibles', sa.Integer(), nullable=False),
     sa.Column('origen_sitio_id', sa.Integer(), nullable=False),
     sa.Column('destino_sitio_id', sa.Integer(), nullable=False),
     sa.Column('unidad_id', sa.Integer(), nullable=False),

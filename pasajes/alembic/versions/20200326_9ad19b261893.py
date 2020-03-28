@@ -1,8 +1,8 @@
 """init
 
-Revision ID: f70bffdf632f
+Revision ID: 9ad19b261893
 Revises: 
-Create Date: 2020-03-20 01:44:44.565865
+Create Date: 2020-03-26 11:24:19.292259
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f70bffdf632f'
+revision = '9ad19b261893'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -67,6 +67,7 @@ def upgrade():
     op.create_table('unidades',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('numero_asientos', sa.Integer(), nullable=False),
+    sa.Column('numero_unidad', sa.Integer(), nullable=False),
     sa.Column('clase_id', sa.Integer(), nullable=False),
     sa.Column('cooperativa_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['clase_id'], ['clases.id'], name=op.f('fk_unidades_clase_id_clases')),
@@ -78,15 +79,19 @@ def upgrade():
     sa.Column('salida', sa.DateTime(), nullable=True),
     sa.Column('llegada', sa.DateTime(), nullable=True),
     sa.Column('precio', sa.Float(), nullable=False),
-    sa.Column('sitio_id', sa.Integer(), nullable=False),
+    sa.Column('asientos_disponibles', sa.Integer(), nullable=False),
+    sa.Column('origen_sitio_id', sa.Integer(), nullable=False),
+    sa.Column('destino_sitio_id', sa.Integer(), nullable=False),
     sa.Column('unidad_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['sitio_id'], ['sitios.id'], name=op.f('fk_pasajes_sitio_id_sitios')),
+    sa.ForeignKeyConstraint(['destino_sitio_id'], ['sitios.id'], name=op.f('fk_pasajes_destino_sitio_id_sitios')),
+    sa.ForeignKeyConstraint(['origen_sitio_id'], ['sitios.id'], name=op.f('fk_pasajes_origen_sitio_id_sitios')),
     sa.ForeignKeyConstraint(['unidad_id'], ['unidades.id'], name=op.f('fk_pasajes_unidad_id_unidades')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_pasajes'))
     )
     op.create_table('boletos',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('numero_asientos', sa.Text(), nullable=False),
+    sa.Column('numero_asientos', sa.Integer(), nullable=False),
+    sa.Column('precio_total', sa.Float(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('pasaje_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['pasaje_id'], ['pasajes.id'], name=op.f('fk_boletos_pasaje_id_pasajes')),

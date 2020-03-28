@@ -15,18 +15,56 @@ def includeme(config):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
 
-    # Servicios API
+    # API
+    # Rol
+    config.add_route('get_roles',
+                     '/api/roles')
+    # Sitio
+    config.add_route('get_sitios',
+                     '/api/sitios')
+    config.add_route('get_sitio',
+                     '/api/sitio/{id_sitio}')
+    # Cooperativa
+    config.add_route('get_cooperativas',
+                     '/api/cooperativas')
+    config.add_route('get_cooperativa',
+                     '/api/cooperativa/{id_cooperativa}')
+    # Clase
+    config.add_route('get_clases',
+                     '/api/clases')
+    config.add_route('add_clase',
+                     '/api/clase')
+    # Unidad
+    config.add_route('get_unidades',
+                     '/api/unidades')
+    config.add_route('get_unidad',
+                     '/api/unidad/{id_unidad}')
+    # Pasajes
+    config.add_route('get_all_pasajes',
+                     '/api/all/pasajes')
     config.add_route('get_pasajes',
-                     '/get_pasajes', 
-                     factory=api_pasajes_factory)
-    config.add_route('get_cooperativa', '/get_cooperativa/{id_cooperativa}')
+                     '/api/pasajes/{fecha}/{origen}/{destino}')
+    config.add_route('get_pasaje',
+                     '/api/pasaje/{id_pasaje}')
+    config.add_route('add_edit_pasaje',
+                     '/api/pasaje/edit')
+    # Boletos
+    config.add_route('get_boletos',
+                     '/api/boletos/{id_usuario}',)
+    config.add_route('get_boleto',
+                     '/api/boleto/{id_boleto}')
+    config.add_route('add_boleto',
+                     'api/boleto2')
     
+
     # Solo quedan como respaldo
     config.add_route('view_page', '/{pagename}', factory=page_factory)
     config.add_route('add_page', '/add_page/{pagename}',
                      factory=new_page_factory)
     config.add_route('edit_page', '/{pagename}/edit_page',
                      factory=page_factory)
+
+
 
 def new_page_factory(request):
     pagename = request.matchdict['pagename']

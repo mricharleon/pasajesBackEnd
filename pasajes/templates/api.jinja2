@@ -9,12 +9,12 @@
     <p class="lead">
         BackEnd del proyecto <strong>Pasajes!</strong> desarrollado con <strong>Pyramid.</strong>
     </p>
-    <a href="https://github.com/mricharleon/pasajesBackEnd" class="badge badge-secondary">Proyecto en GitHub</a>
+    <a href="https://github.com/mricharleon/pasajesBackEnd" target="blank" class="badge badge-secondary">Proyecto en GitHub</a>
     <hr class="my-4">
     <div>
         <strong class="endpoints">Recursos (EndPoints) | Pendientes (*)</strong>
         <table class="table">
-            <caption>[1] Login</caption>
+            <caption>[1] Autenticación</caption>
             <thead>
                 <tr>
                     <th></th>
@@ -25,6 +25,10 @@
                 <tr>
                     <td><a href="#">POST /api/login *</a></td>
                     <td>Crea una sesion en el proyecto </td>
+                </tr>
+                <tr>
+                    <td><a href="#">GET /api/logout *</a></td>
+                    <td>Cierra una sesion en el proyecto </td>
                 </tr>
             </tbody>
         </table>
@@ -39,24 +43,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/rol *</a></td>
-                    <td>Crea un objeto rol</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/roles *</a></td>
+                    <td><a href="api/roles">GET /api/roles</a></td>
                     <td>Obtiene todos los objetos roles</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/rol/{id} *</a></td>
-                    <td>Obtiene un solo objeto rol</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/rol/{id} *</a></td>
-                    <td>Actualiza un objeto rol</td>
-                </tr>
-                <tr>
-                    <td><a href="#">DELETE /api/rol/{id} *</a></td>
-                    <td>Elimina un objeto rol</td>
                 </tr>
             </tbody>
         </table>
@@ -71,16 +59,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/usuario *</a></td>
-                    <td>Crea un objeto usuario</td>
-                </tr>
-                <tr>
                     <td><a href="#">GET /api/usuario/{id} *</a></td>
                     <td>Obtiene un solo objeto usuario</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/usuario/{id} *</a></td>
-                    <td>Actualiza un objeto usuario</td>
                 </tr>
             </tbody>
         </table>
@@ -95,24 +75,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/sitio *</a></td>
-                    <td>Crea un objeto sitio</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/sitios *</a></td>
+                    <td><a href="api/sitios">GET /api/sitios</a></td>
                     <td>Obtiene todos los objetos de sitios</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/sitio/{id} *</a></td>
+                    <td><a href="/api/sitio/1">GET /api/sitio/{id_sitio}</a></td>
                     <td>Obtiene un solo objeto sitio</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/sitio/{id} *</a></td>
-                    <td>Actualiza un objeto sitio</td>
-                </tr>
-                <tr>
-                    <td><a href="#">DELETE /api/sitio/{id} *</a></td>
-                    <td>Elimina un objeto sitio</td>
                 </tr>
             </tbody>
         </table>
@@ -127,24 +95,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/cooperativa *</a></td>
-                    <td>Crea un objeto cooperativa</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/cooperativas *</a></td>
+                    <td><a href="api/cooperativas">GET /api/cooperativas</a></td>
                     <td>Obtiene todos los objetos cooperativas</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/cooperativa/{id} *</a></td>
+                    <td><a href="api/cooperativa/1">GET /api/cooperativa/{id}</a></td>
                     <td>Obtiene un solo objeto cooperativa</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/cooperativa/{id} *</a></td>
-                    <td>Actualiza un objeto cooperativa</td>
-                </tr>
-                <tr>
-                    <td><a href="#">DELETE /api/cooperataiva/{id} *</a></td>
-                    <td>Elimina un objeto cooperativa</td>
                 </tr>
             </tbody>
         </table>
@@ -159,24 +115,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/clase *</a></td>
-                    <td>Crea un objeto clase</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/clases *</a></td>
+                    <td><a href="api/clases">GET /api/clases</a></td>
                     <td>Obtiene todos los objetos clases</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/clase/{id} *</a></td>
-                    <td>Obtiene un solo objeto clase</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/clase/{id} *</a></td>
-                    <td>Actualiza un objeto clase</td>
-                </tr>
-                <tr>
-                    <td><a href="#">DELETE /api/clase/{id} *</a></td>
-                    <td>Elimina un objeto clase</td>
                 </tr>
             </tbody>
         </table>
@@ -191,24 +131,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/unidad *</a></td>
-                    <td>Crea un objeto unidad</td>
-                </tr>
-                <tr>
-                    <td><a href="#">GET /api/unidades *</a></td>
+                    <td><a href="api/unidades">GET /api/unidades</a></td>
                     <td>Obtiene todos los objetos unidades</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/unidad/{id} *</a></td>
+                    <td><a href="api/unidad/1">GET /api/unidad/{id}</a></td>
                     <td>Obtiene un solo objeto unidad</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/unidad/{id} *</a></td>
-                    <td>Actualiza un objeto unidad</td>
-                </tr>
-                <tr>
-                    <td><a href="#">DELETE /api/unidad/{id} *</a></td>
-                    <td>Elimina un objeto unidad</td>
                 </tr>
             </tbody>
         </table>
@@ -223,15 +151,19 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/pasaje *</a></td>
+                    <td><a href="">POST /api/pasaje *</a></td>
                     <td>Crea un objeto pasajes</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/pasajes *</a></td>
+                    <td><a href="api/pasajes">GET /api/pasajes</a></td>
                     <td>Obtiene todos los objetos pasajes</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/pasaje/{id} *</a></td>
+                    <td><a href="api/pasajes/2020-03-22/1/2">GET /api/pasajes/:fecha/:origen/:destino</a></td>
+                    <td>Obtiene todos los objetos pasajes (fecha, origen y destino)</td>
+                </tr>
+                <tr>
+                    <td><a href="api/pasaje/1">GET /api/pasaje/{id}</a></td>
                     <td>Obtiene un solo objeto pasaje</td>
                 </tr>
                 <tr>
@@ -255,20 +187,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/boleto *</a></td>
+                    <td><a href="#">POST /api/boleto</a></td>
                     <td>Crea un objeto boleto</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/boletos *</a></td>
-                    <td>Obtiene todos los objetos boletos</td>
+                    <td><a href="api/boletos/2">GET /api/boletos/:id_usuario</a></td>
+                    <td>Obtiene todos los objetos boletos que registre el usuario</td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/boleto/{id} *</a></td>
-                    <td>Obtiene un solo objeto boleto</td>
-                </tr>
-                <tr>
-                    <td><a href="#">PUT /api/boleto/{id} *</a></td>
-                    <td>Actualiza un objeto boleto</td>
+                    <td><a href="#">GET /api/boleto/{id}/{id_uuario} *</a></td>
+                    <td>Obtiene un solo objeto boleto que registre el usuario</td>
                 </tr>
                 <tr>
                     <td><a href="#">DELETE /api/boleto/{id} *</a></td>

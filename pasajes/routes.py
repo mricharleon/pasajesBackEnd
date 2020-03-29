@@ -44,17 +44,16 @@ def includeme(config):
                      '/api/all/pasajes')
     config.add_route('get_pasajes',
                      '/api/pasajes/{fecha}/{origen}/{destino}')
-    config.add_route('get_pasaje',
+    config.add_route('get_pasaje', # Ruta para UPDATE, GET
                      '/api/pasaje/{id_pasaje}')
-    config.add_route('add_edit_pasaje',
-                     '/api/pasaje/edit/{id_pasaje}')
+
     # Boletos
-    config.add_route('get_boletos',
-                     '/api/boletos/{id_usuario}',)
-    config.add_route('get_boleto',
+    config.add_route('get_boletos', # Ruta para get all
+                     '/api/boletos/{id_usuario}')
+    config.add_route('api_boletos', # Ruta para POST
+                     'api/boletos')
+    config.add_route('api_boleto', # Ruta para GET y DELETE
                      '/api/boleto/{id_boleto}')
-    config.add_route('add_boleto',
-                     'api/boleto2')
     
 
     # Solo quedan como respaldo

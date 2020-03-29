@@ -1,5 +1,9 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+from pyramid.response import Response
+from json import loads
+
+from ..viewmodels.update_pasaje_viewmodel import UpdatePasajeViewModel
 
 # Modelos
 from .. import models
@@ -33,31 +37,33 @@ def get_pasaje_api(request):
     pasaje = RepositorioPasaje.get_pasaje(request, id_pasaje)
     return pasaje
 
+
 # Guarda un pasaje Editado
-@view_config(route_name='add_edit_pasaje',
-             request_method='PUT',
-             renderer='json')
-def add_edit_pasaje_api(request):
-    data = request.json_body
-    pasaje = RepositorioPasaje.get_pasaje(request, data['id'])
+@view_config(route_name='get_pasaje',
+             request_method='PUT')
+def put_pasaje_api(request):
+    pasaje_id = request.matchdict.get('id_pasaje')
+    pasaje = RepositorioPasaje.get_pasaje(request, pasaje_id)
+    if pasaje_id == '__first__':
+        pasaje_id = RepositorioPasaje.get_all_pasajes(request)[0].id
 
-    pasaje.salida = data.get('salida')
-    pasaje.llegada = data.get('llegada')
-    pasaje.precio = data.get('precio')
-    pasaje.asientos_disponibles = data.get('asientos_disponibles')
-    pasaje.origen_sitio_id = data.get('origen').get('id')
-    pasaje.destino_sitio_id = data.get('destino').get('id')
-    pasaje.unidad_id = data.get('unidad').get('id')
+    if not pasaje:
+        msg = "El pasaje con el Id '{}' no fue encontrado.".format(pasaje_id)
+        return Response(status=404, json_body={'error': msg})
 
-    if request.dbsession.add(pasaje) == None:
-        response = {
-            'msg': 'Pasaje editado correctamente!',
-            'status': '200',
-        }
-    else:
-        response = {
-            'msg': 'Error, Pasaje no guardado!',
-            'status': '422',
-        }
+    try:
+        pasaje_data = request.json_body
+        # pasaje_data = loads(request.body, encoding=request.charset)
+    except:
+        return Response(status=400, body='No se puede parsear tu petición a JSON.')
 
-    return response
+    vm = UpdatePasajeViewModel(pasaje_data, pasaje_id)
+    vm.compute_details()
+    if vm.errors:
+        return Response(status=400, body=vm.error_msg)
+
+    try:
+        RepositorioPasaje.update_pasaje(request, vm.pasaje)
+        return Response(status=204, body='Pasaje actualizado correctamente.')
+    except:
+        return Response(status=400, body='Pasaje no ha sido actualizado.')

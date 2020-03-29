@@ -14,3 +14,25 @@ class RepositorioBoleto:
         query_boleto = request.dbsession.query(Boleto).filter(Boleto.id == id_boleto).first()
 
         return query_boleto
+
+    @classmethod
+    def add_boleto(cls, request, boleto: Boleto):
+        db_boleto = Boleto()
+        db_boleto.numero_asientos = boleto.numero_asientos
+        db_boleto.precio_total = boleto.precio_total
+        db_boleto.user_id = boleto.user_id
+        db_boleto.pasaje_id = boleto.pasaje_id
+
+        request.dbsession.add(db_boleto)
+
+        return db_boleto
+
+    @classmethod
+    def delete_boleto(cls, request, boleto_id):
+        db_boleto = request.dbsession.query(Boleto).filter(Boleto.id == boleto_id).first()
+        if not db_boleto:
+            print('hola')
+            return
+
+        request.dbsession.delete(db_boleto)        
+        return

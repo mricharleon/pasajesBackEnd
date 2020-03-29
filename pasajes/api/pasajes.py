@@ -29,3 +29,17 @@ class RepositorioPasaje:
         query_pasaje = request.dbsession.query(Pasaje).filter(Pasaje.id == id_pasaje).first()
 
         return query_pasaje
+    
+    @classmethod
+    def update_pasaje(cls, request, pasaje):
+
+        db_pasaje = request.dbsession.query(Pasaje).filter(Pasaje.id == pasaje.id).first()
+        db_pasaje.salida = pasaje.salida
+        db_pasaje.llegada = pasaje.llegada
+        db_pasaje.precio = pasaje.precio
+        db_pasaje.asientos_disponibles = pasaje.asientos_disponibles
+        db_pasaje.origen_sitio_id = pasaje.origen_sitio_id
+        db_pasaje.destino_sitio_id = pasaje.destino_sitio_id
+        db_pasaje.unidad_id = pasaje.unidad_id
+
+        return db_pasaje

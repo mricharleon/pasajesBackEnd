@@ -1,8 +1,10 @@
 from pyramid.view import view_config
 from pyramid.response import Response
+from json import loads
 
 # Modelos
 from .. import models
+from ..viewmodels.create_boleto_viewmodel import CreateBoletoViewModel
 
 # Servicios
 from .. api.boletos import RepositorioBoleto
@@ -11,6 +13,7 @@ from .. api.pasajes import RepositorioPasaje
 
 # Obtiene todos boletos de un usuario
 @view_config(route_name='get_boletos',
+             request_method='GET',
              renderer='json')
 def get_boletos_api(request):
     id_usuario = request.matchdict['id_usuario']
@@ -18,40 +21,47 @@ def get_boletos_api(request):
     return boletos
 
 # Obtiene el boleto a travez de su Id
-@view_config(route_name='get_boleto',
+@view_config(route_name='api_boleto',
              renderer='json')
 def get_boleto_api(request):
+    print('get_boleto_api')
     id_boleto = request.matchdict['id_boleto']
     boleto = RepositorioBoleto.get_boleto(request, id_boleto)
     return boleto
 
 # Crea un boleto
-@view_config(route_name='add_boleto',
-             request_method='POST',
-             renderer='json')
+@view_config(route_name='api_boletos',
+             request_method='POST')
 def add_boleto_api(request):
-    dataBoleto = request.json_body
-    boleto = models.Boleto(numero_asientos=dataBoleto.get('numero_asientos'),
-                           precio_total=dataBoleto.get('precio_total'),
-                           user_id=dataBoleto.get('user_id'),
-                           pasaje_id=dataBoleto.get('pasaje_id'))
+    try:
+        boleto_data = request.json_body
+    except Exception as x:
+        return Response(status=400, body='No se pudo parsear tu petición POST como un JSON. ' + str(x))
 
-    # Actualiza el valor de asientos disponibles en el pasaje
-    pasaje = RepositorioPasaje.get_pasaje(request, boleto.pasaje_id)
-    if (pasaje.unidad.numero_asientos >= int(boleto.numero_asientos)):
-        asientos_disponibles = pasaje.asientos_disponibles - int(boleto.numero_asientos)
-        pasaje.asientos_disponibles = asientos_disponibles
-    else:
-        asientos_disponibles = False
+    vm = CreateBoletoViewModel(boleto_data)
+    vm.compute_details()
+    if vm.errors:
+        return Response(status=400, body=vm.error_msg)
+    try:
+        boleto = RepositorioBoleto.add_boleto(request, vm.boleto)
+        return Response(status=201, json_body=boleto.__json__(request))
+    except Exception as x:
+        return Response(status=500, body='No se pudo guardar el boleto. ' + str(x))
     
-    if (request.dbsession.add(boleto) == None) and (request.dbsession.add(pasaje) == None) and asientos_disponibles:
-        response = {
-            'msg': 'Boleto registrado correctamente!',
-            'status': '200',
-        }
-    else:
-        response = {
-            'msg': 'Error, Boleto no registrado!',
-            'status': '422',
-        }
-    return response
+
+# Elimina un boleto
+@view_config(route_name='api_boleto',
+             request_method='DELETE')
+def delete_boleto_api(request):
+    print('delete_boleto_api')
+    boleto_id = request.matchdict['id_boleto']
+    boleto = RepositorioBoleto.get_boleto(request, boleto_id)
+
+    if not boleto:
+        msg = "El boleto con el Id: '{}' no fue encontrado.".format(boleto_id)
+        return Response(status=404, json_body={'error': msg})
+    try:
+        RepositorioBoleto.delete_boleto(request, boleto_id)
+        return Response(status=204, body='Boleto eliminado correctamente.')
+    except:
+        return Response(status=400, body='No se pudo eliminar el boleto, revisa tu petición.')

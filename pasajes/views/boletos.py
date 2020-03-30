@@ -24,7 +24,6 @@ def get_boletos_api(request):
 @view_config(route_name='api_boleto',
              renderer='json')
 def get_boleto_api(request):
-    print('get_boleto_api')
     id_boleto = request.matchdict['id_boleto']
     boleto = RepositorioBoleto.get_boleto(request, id_boleto)
     return boleto
@@ -47,13 +46,12 @@ def add_boleto_api(request):
         return Response(status=201, json_body=boleto.__json__(request))
     except Exception as x:
         return Response(status=500, body='No se pudo guardar el boleto. ' + str(x))
-    
+
 
 # Elimina un boleto
 @view_config(route_name='api_boleto',
              request_method='DELETE')
 def delete_boleto_api(request):
-    print('delete_boleto_api')
     boleto_id = request.matchdict['id_boleto']
     boleto = RepositorioBoleto.get_boleto(request, boleto_id)
 

@@ -9,7 +9,7 @@ class RepositorioPasaje:
     
     @classmethod
     def get_all_pasajes(cls, request):
-        query_pasajes = request.dbsession.query(Pasaje).filter().order_by(Pasaje.origen_sitio_id).all()
+        query_pasajes = request.dbsession.query(Pasaje).filter().order_by(Pasaje.asientos_disponibles).all()
 
         return query_pasajes
 

@@ -53,7 +53,6 @@ def put_pasaje_api(request):
 
     try:
         pasaje_data = request.json_body
-        # pasaje_data = loads(request.body, encoding=request.charset)
     except:
         return Response(status=400, body='No se puede parsear tu petición a JSON.')
 

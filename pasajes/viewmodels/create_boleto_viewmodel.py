@@ -17,8 +17,10 @@ class CreateBoletoViewModel(ViewModelBase):
         user_id = self.data_dict.get('user_id')
         pasaje_id = self.data_dict.get('pasaje_id')
 
-        if not numero_asientos:
+        if numero_asientos is None:
             self.errors.append("Número de asientos, es requerido.")
+        elif int(numero_asientos) <= 0:
+            self.errors.append("Número de asientos, no debe ser negativo o cero.")
         if precio_total is None:
             self.errors.append("Precio total, es requerido.")
         elif precio_total < 0:
@@ -27,6 +29,7 @@ class CreateBoletoViewModel(ViewModelBase):
             self.errors.append("El usuario, es requerido.")
         if not pasaje_id:
             self.errors.append("El pasaje, es requerido.")
+
 
         if not self.errors:
             boleto = Boleto(numero_asientos=numero_asientos,

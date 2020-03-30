@@ -29,8 +29,10 @@ class CreatePasajeViewModel(ViewModelBase):
             self.errors.append("Precio, es requerido.")
         elif precio < 0:
             self.errors.append("Precio, no debe ser negativo.")
-        if not asientos_disponibles:
+        if asientos_disponibles is None:
             self.errors.append("Asientos disponibles, es requerido.")
+        elif asientos_disponibles < 0:
+            self.errors.append("Asientos disponibles, no debe ser negativo.")
         if not origen_sitio_id:
             self.errors.append("Origen, es requerido.")
         if not destino_sitio_id:

@@ -1,4 +1,5 @@
 from pasajes.models.boleto import Boleto
+from .pasajes import RepositorioPasaje
 
 
 class RepositorioBoleto:
@@ -17,6 +18,12 @@ class RepositorioBoleto:
 
     @classmethod
     def add_boleto(cls, request, boleto: Boleto):
+
+        # Decrementa el numero de asientos disponibles en el pasaje
+        pasaje = RepositorioPasaje.get_pasaje(request, boleto.pasaje_id)
+        asientos_disponibles = pasaje.asientos_disponibles - int(boleto.numero_asientos)
+        pasaje.asientos_disponibles = asientos_disponibles
+
         db_boleto = Boleto()
         db_boleto.numero_asientos = boleto.numero_asientos
         db_boleto.precio_total = boleto.precio_total
@@ -31,7 +38,6 @@ class RepositorioBoleto:
     def delete_boleto(cls, request, boleto_id):
         db_boleto = request.dbsession.query(Boleto).filter(Boleto.id == boleto_id).first()
         if not db_boleto:
-            print('hola')
             return
 
         request.dbsession.delete(db_boleto)        

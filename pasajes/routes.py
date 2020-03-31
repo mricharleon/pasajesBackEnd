@@ -13,15 +13,23 @@ def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('view_api', '/')
     config.add_route('login', '/login')
+    config.add_route('api_login', '/api/login')
+    config.add_route('api_logout', '/api/logout')
     config.add_route('logout', '/logout')
 
     # API
     # Rol
     config.add_route('get_roles',
                      '/api/roles')
+
+    # Usuarios
+    config.add_route('api_usuario',
+                     '/api/usuario/{id_usuario}')
+
     # Sitio
     config.add_route('get_sitios',
-                     '/api/sitios')
+                     '/api/sitios',
+                     factory=api_sitios_factory)
     config.add_route('get_sitio',
                      '/api/sitio/{id_sitio}')
     # Cooperativa
@@ -55,15 +63,6 @@ def includeme(config):
     config.add_route('api_boleto', # Ruta para GET y DELETE
                      '/api/boleto/{id_boleto}')
     
-
-    # Solo quedan como respaldo
-    config.add_route('view_page', '/{pagename}', factory=page_factory)
-    config.add_route('add_page', '/add_page/{pagename}',
-                     factory=new_page_factory)
-    config.add_route('edit_page', '/{pagename}/edit_page',
-                     factory=page_factory)
-
-
 
 def new_page_factory(request):
     pagename = request.matchdict['pagename']
@@ -100,7 +99,7 @@ class PageResource(object):
             (Allow, str(self.page.creator_id), 'edit'),
         ]
 
-def api_pasajes_factory(request):
+def api_sitios_factory(request):
     return PasajeResource()
 
 class PasajeResource(object):
@@ -110,5 +109,5 @@ class PasajeResource(object):
     def __acl__(self):
         return [
             (Allow, 'role:editor', 'view'),
-            (Allow, Everyone, 'view'),
+            # (Allow, Everyone, 'view'),
         ]

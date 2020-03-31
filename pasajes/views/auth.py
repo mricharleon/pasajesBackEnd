@@ -1,4 +1,4 @@
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPFound, HTTPOk
 from pyramid.response import Response
 from pyramid.security import (
     remember,
@@ -10,6 +10,32 @@ from pyramid.view import (
 )
 
 from ..models import User
+
+
+@view_config(route_name='api_login', renderer='json')
+def api_login(request):
+    msg = ''
+    login_data = request.json_body
+
+    if 'login' in login_data and 'password' in login_data:
+        login = login_data.get('login')
+        password = login_data.get('password')
+        user = request.dbsession.query(User).filter_by(name=login).first()
+        if user is not None and user.check_password(password):
+            request.session['user'] = user
+            headers = remember(request, user.id)
+            response = Response( json_body=user.__json__(request) )
+            response.headers.extend(headers)
+            return response
+        msg = 'Failed login'
+    return msg
+
+@view_config(route_name='api_logout')
+def api_logout(request):
+    headers = forget(request)
+    response = Response( '' )
+    response.headers.extend(headers)
+    return response
 
 
 @view_config(route_name='login', renderer='../templates/login.jinja2')

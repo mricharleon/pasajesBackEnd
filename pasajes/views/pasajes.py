@@ -14,7 +14,8 @@ from .. api.pasajes import RepositorioPasaje
 
 # Obtiene todos los pasajes ecistentes
 @view_config(route_name='get_all_pasajes',
-             renderer='json')
+             renderer='json',
+             permission="edit")
 def get_all_pasajes_api(request):
     pasajes = RepositorioPasaje.get_all_pasajes(request)
     return pasajes
@@ -31,7 +32,7 @@ def get_pasajes_api(request):
 
 # Obtiene un solo pasaje de acuerdo a su Id
 @view_config(route_name='get_pasaje',
-             renderer='json')
+             renderer='json',)
 def get_pasaje_api(request):
     id_pasaje = request.matchdict['id_pasaje']
     pasaje = RepositorioPasaje.get_pasaje(request, id_pasaje)
@@ -40,7 +41,8 @@ def get_pasaje_api(request):
 
 # Guarda un pasaje Editado
 @view_config(route_name='get_pasaje',
-             request_method='PUT')
+             request_method='PUT',
+             permission="edit")
 def put_pasaje_api(request):
     pasaje_id = request.matchdict.get('id_pasaje')
     pasaje = RepositorioPasaje.get_pasaje(request, pasaje_id)

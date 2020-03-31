@@ -13,11 +13,13 @@ def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('view_api', '/')
     config.add_route('login', '/login')
-    config.add_route('api_login', '/api/login')
-    config.add_route('api_logout', '/api/logout')
     config.add_route('logout', '/logout')
 
     # API
+    # Autenticacion
+    config.add_route('api_login', '/api/login')
+    config.add_route('api_logout', '/api/logout')
+
     # Rol
     config.add_route('get_roles',
                      '/api/roles')
@@ -28,32 +30,37 @@ def includeme(config):
 
     # Sitio
     config.add_route('get_sitios',
-                     '/api/sitios',
-                     factory=api_sitios_factory)
+                     '/api/sitios')
     config.add_route('get_sitio',
                      '/api/sitio/{id_sitio}')
+                     
     # Cooperativa
     config.add_route('get_cooperativas',
                      '/api/cooperativas')
     config.add_route('get_cooperativa',
                      '/api/cooperativa/{id_cooperativa}')
+                     
     # Clase
     config.add_route('get_clases',
                      '/api/clases')
     config.add_route('add_clase',
                      '/api/clase')
+                     
     # Unidad
     config.add_route('get_unidades',
                      '/api/unidades')
     config.add_route('get_unidad',
                      '/api/unidad/{id_unidad}')
+
     # Pasajes
     config.add_route('get_all_pasajes',
-                     '/api/all/pasajes')
+                     '/api/all/pasajes',
+                     factory=editor_factory)
     config.add_route('get_pasajes',
                      '/api/pasajes/{fecha}/{origen}/{destino}')
     config.add_route('get_pasaje', # Ruta para UPDATE, GET
-                     '/api/pasaje/{id_pasaje}')
+                     '/api/pasaje/{id_pasaje}',
+                     factory=editor_factory)
 
     # Boletos
     config.add_route('get_boletos', # Ruta para get all
@@ -64,50 +71,16 @@ def includeme(config):
                      '/api/boleto/{id_boleto}')
     
 
-def new_page_factory(request):
-    pagename = request.matchdict['pagename']
-    if request.dbsession.query(models.Page).filter_by(name=pagename).count() > 0:
-        next_url = request.route_url('edit_page', pagename=pagename)
-        raise HTTPFound(location=next_url)
-    return NewPage(pagename)
+def editor_factory(request):
+    return EditorResource()
 
-class NewPage(object):
-    def __init__(self, pagename):
-        self.pagename = pagename
-
-    def __acl__(self):
-        return [
-            (Allow, 'role:editor', 'create'),
-            (Allow, 'role:basic', 'create'),
-        ]
-
-def page_factory(request):
-    pagename = request.matchdict['pagename']
-    page = request.dbsession.query(models.Page).filter_by(name=pagename).first()
-    if page is None:
-        raise HTTPNotFound
-    return PageResource(page)
-
-class PageResource(object):
-    def __init__(self, page):
-        self.page = page
-
-    def __acl__(self):
-        return [
-            (Allow, Everyone, 'view'),
-            (Allow, 'role:editor', 'edit'),
-            (Allow, str(self.page.creator_id), 'edit'),
-        ]
-
-def api_sitios_factory(request):
-    return PasajeResource()
-
-class PasajeResource(object):
+class EditorResource(object):
     def __init__(self):
         pass
 
     def __acl__(self):
         return [
+            (Allow, 'role:editor', 'edit'),
             (Allow, 'role:editor', 'view'),
-            # (Allow, Everyone, 'view'),
+            (Allow, 'role:basic', 'view'),
         ]

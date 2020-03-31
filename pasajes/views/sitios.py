@@ -4,8 +4,7 @@ from pyramid.view import view_config
 from .. api.sitios import RepositorioSitio
 
 @view_config(route_name='get_sitios',
-             renderer='json',
-             permission='view')
+             renderer='json')
 def get_sitios_api(request):
     sitios = RepositorioSitio.all_sitios(request)
     return sitios

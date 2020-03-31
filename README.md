@@ -1,51 +1,39 @@
-pasajes
-=======
+pasajesBackEnd
+======
 
-Getting Started
----------------
+## Clonar el proyecto y crear entorno virtual
 
-- Clonar el proyecto
+~~~
+git clone git@github.com:mricharleon/pasajesBackEnd.git
+cd pasajesBackEnd
+virtualenv envPasajes --python=python3
+~~~
 
-    git clone git@github.com:mricharleon/pasajesBackEnd.git
+## Activar entorno virtual y actualizar herramientas
+~~~
+source envPasajes/bin/activate
+pip install --upgrade pip setuptools
+~~~
 
-- Ingresar al directorio del proyecto
+## Instalar dependencias para desarrollo
+~~~
+pip install -e ".[testing]"
+~~~
 
-    cd pasajes
+## Configrar e inicializar la base de datos
+* sqlalchemy.url = postgresql://USERDB:PASSWORD@HOST:PORT/NAMEDB
+~~~
+alembic -c development.ini revision --autogenerate -m "init"
+alembic -c development.ini upgrade head
+initialize_pasajes_db development.ini
+~~~
 
-- Crear un entorno virtual
+## Ejecutar Redis y el proyecto
+~~~
+redis-server
+pserve development.ini 
+~~~
 
-    virtualenv envPasajes --python=python3
-
-- Activar entorno virtual
-
-    source envPasajes/bin/activate
-
-- Actualizar herramientas
-
-    pip install --upgrade pip setuptools
-
-- Instalar el proyecto
-
-    pip install -e ".[testing]"
-
-- Configurar archivo <production.ini>
-
-    sqlalchemy.url = postgresql://USERDB:PASSWORD@HOST:PORT/NAMEDB
-
-- Inicializar y actualizar la base de datos usando alembic
-
-    - Generar la primera revision
-
-        alembic -c production.ini revision --autogenerate -m "init"
-
-    - Actualizar 
-
-        alembic -c production.ini upgrade head
-
-- Cargar data por defecto 
-
-    initialize_pasajes_db production.ini
-
-- Ejecutar el proyecto
-
-    pserve production.ini
+## Usuarios
+- `User:` editor  `Pass:` editor 
+- `User:` basic  `Pass:` basic

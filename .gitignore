@@ -121,4 +121,4 @@ Data.fs*
 .sw?
 .DS_Store
 
-development.ini
+pasajes/alembic/versions/*.*

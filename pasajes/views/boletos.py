@@ -58,8 +58,14 @@ def delete_boleto_api(request):
     if not boleto:
         msg = "El boleto con el Id: '{}' no fue encontrado.".format(boleto_id)
         return Response(status=404, json_body={'error': msg})
-    try:
-        RepositorioBoleto.delete_boleto(request, boleto_id)
-        return Response(status=204, body='Boleto eliminado correctamente.')
-    except:
-        return Response(status=400, body='No se pudo eliminar el boleto, revisa tu petición.')
+    
+    valid = RepositorioBoleto.compute_details_delete(request, boleto)
+    
+    if valid:
+        try:
+            RepositorioBoleto.delete_boleto(request, boleto_id)
+            return Response(status=204, json_body={'msg':'Boleto eliminado correctamente.'})
+        except:
+            return Response(status=400, json_body={'error':'No se pudo eliminar el boleto, revisa tu petición.'})
+    else:
+        return Response(status=400, json_body={'error':'No se pudo eliminar el boleto, el boleto podrá ser eliminado con 5 horas de anticipación.'})

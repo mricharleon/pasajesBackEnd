@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from pasajes.models.boleto import Boleto
 from .pasajes import RepositorioPasaje
 
@@ -42,3 +43,20 @@ class RepositorioBoleto:
 
         request.dbsession.delete(db_boleto)        
         return
+
+    @classmethod
+    def compute_details_delete(cls, request, boleto):
+        """Verifica que cumpla con las condiciones necesarias para poder ser eliminado
+        - si la fecha actual es menos o igual a 5 horas de la fecha de salida del boleto
+        """
+
+        pasaje = RepositorioPasaje.get_pasaje(request, boleto.pasaje_id)
+        fecha_cinco_horas_mas = datetime.now() + timedelta(hours=5)
+
+        if fecha_cinco_horas_mas <= pasaje.salida:
+            try:
+                pasaje.asientos_disponibles += boleto.numero_asientos
+                return True
+            except:
+                return None 
+        return None 

@@ -67,7 +67,7 @@ def logout(request):
     next_url = request.route_url('view_api')
     return HTTPFound(location=next_url, headers=headers)
 
+# Se dispara cuando la petición no pasa los permissions
 @forbidden_view_config()
 def forbidden_view(request):
-    next_url = request.route_url('login', _query={'next': request.url})
-    return HTTPFound(location=next_url)
+    return Response(status=401)

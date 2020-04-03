@@ -51,20 +51,20 @@ def put_pasaje_api(request):
 
     if not pasaje:
         msg = "El pasaje con el Id '{}' no fue encontrado.".format(pasaje_id)
-        return Response(status=404, json_body={'error': msg})
+        return Response(status=404, json_body={'msg': msg})
 
     try:
         pasaje_data = request.json_body
     except:
-        return Response(status=400, body='No se puede parsear tu petición a JSON.')
+        return Response(status=400, json_body={'msg':'No se puede parsear tu petición a JSON.'})
 
     vm = UpdatePasajeViewModel(pasaje_data, pasaje_id)
     vm.compute_details()
     if vm.errors:
-        return Response(status=400, body=vm.error_msg)
+        return Response(status=400, json_body={'msg':vm.error_msg})
 
     try:
         RepositorioPasaje.update_pasaje(request, vm.pasaje)
-        return Response(status=204, body='Pasaje actualizado correctamente.')
+        return Response(status=200, json_body={'msg':'Pasaje actualizado correctamente.'})
     except:
-        return Response(status=400, body='Pasaje no ha sido actualizado.')
+        return Response(status=400, json_body={'msg':'Pasaje no ha sido actualizado.'})

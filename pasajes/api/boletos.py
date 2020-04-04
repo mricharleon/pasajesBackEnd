@@ -32,7 +32,7 @@ class RepositorioBoleto:
         db_boleto.pasaje_id = boleto.pasaje_id
 
         request.dbsession.add(db_boleto)
-
+        
         return db_boleto
 
     @classmethod

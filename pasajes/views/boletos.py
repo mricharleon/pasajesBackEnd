@@ -35,17 +35,17 @@ def add_boleto_api(request):
     try:
         boleto_data = request.json_body
     except Exception as x:
-        return Response(status=400, body='No se pudo parsear tu petición POST como un JSON. ' + str(x))
+        return Response( status=400, json_body={'msg':'No se pudo parsear tu petición POST como un JSON: ' + str(x)} )
 
     vm = CreateBoletoViewModel(boleto_data)
     vm.compute_details()
     if vm.errors:
-        return Response(status=400, body=vm.error_msg)
+        return Response(status=400, json_body=vm.error_msg)
     try:
         boleto = RepositorioBoleto.add_boleto(request, vm.boleto)
-        return Response(status=201, json_body=boleto.__json__(request))
+        return Response(status=200, json_body={'msg':'Boleto registrado correctamente'})
     except Exception as x:
-        return Response(status=500, body='No se pudo guardar el boleto. ' + str(x))
+        return Response(status=500, json_body={'msg':'No se pudo guardar el boleto: ' + str(x)})
 
 
 # Elimina un boleto

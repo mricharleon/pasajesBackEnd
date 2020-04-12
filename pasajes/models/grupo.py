@@ -16,7 +16,6 @@ class Grupo(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(Text, nullable=False) 
 
-    # TODO verfiicar esta relacion
     menu = relationship('Menu', back_populates='grupo')
 
     def __json__(self, request):

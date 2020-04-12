@@ -72,14 +72,6 @@ def setup_models(dbsession):
     basic.set_password('cliente')
     dbsession.add(basic)
 
-    # Pagina 
-    # page = models.Page(
-    #     name='FrontPage',
-    #     creator=editor,
-    #     data='This is the front page',
-    # )
-    # dbsession.add(page)
-
     # Sitio
     loja = models.Sitio(ciudad='Loja', terminal='Av. Isidro Ayora')
     dbsession.add(loja)

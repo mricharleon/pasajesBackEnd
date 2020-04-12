@@ -27,8 +27,8 @@ def api_login(request):
             response = Response( json_body=user.__json__(request) )
             response.headers.extend(headers)
             return response
-        msg = 'Failed login'
-    return msg
+        msg = 'Credenciales incorrectas!'
+    return Response(status=403, body=msg)
 
 @view_config(route_name='api_logout')
 def api_logout(request):

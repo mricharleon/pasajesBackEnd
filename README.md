@@ -35,5 +35,9 @@ pserve development.ini
 ~~~
 
 ## Usuarios
-- `User:` editor  `Pass:` editor 
-- `User:` basic  `Pass:` basic
+| Usuario | Contraseña | Grupo | Permisos |
+|---|---|---|---|
+| admin | admin | Administrador |
+| loja | loja | Cooperativa |
+| cariamanga | cariamanga | Cooperativa |
+| basic | basic | Cliente |

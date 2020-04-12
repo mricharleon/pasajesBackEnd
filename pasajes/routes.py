@@ -20,6 +20,10 @@ def includeme(config):
     config.add_route('api_login', '/api/login')
     config.add_route('api_logout', '/api/logout')
 
+    # Menu 
+    config.add_route('get_menu',
+                     '/api/menu')
+
     # Rol
     config.add_route('get_roles',
                      '/api/roles')

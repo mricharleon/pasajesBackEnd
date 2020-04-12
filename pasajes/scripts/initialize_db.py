@@ -9,27 +9,76 @@ from .. import models
 
 
 def setup_models(dbsession):
+    
     # Rol
-    admin = models.Rol(nombre='admin', descripcion='Usuario administrador')
-    dbsession.add(admin)
-    cliente = models.Rol(nombre='cliente', descripcion='Usuario cliente')
+    r_admin = models.Rol(nombre='administrador', descripcion='Usuario administrador')
+    dbsession.add(r_admin)
+    r_cooperativa = models.Rol(nombre='cooperativa', descripcion='Usuario cooperativa')
+    dbsession.add(r_cooperativa)
+    r_cliente = models.Rol(nombre='cliente', descripcion='Usuario cliente')
+    dbsession.add(r_cliente)
+
+    # Grupo
+    administrador = models.Grupo(nombre='Administrador')
+    dbsession.add(administrador)
+    cooperativa = models.Grupo(nombre='Cooperativa')
+    dbsession.add(cooperativa)
+    cliente = models.Grupo(nombre='Cliente')
     dbsession.add(cliente)
 
+    # Menu
+    menu1 = models.Menu(nombre='Boletos', url='', grupo=administrador)
+    dbsession.add(menu1)
+    menu2 = models.Menu(nombre='Pasajes', url='', grupo=administrador)
+    dbsession.add(menu2)
+    menu3 = models.Menu(nombre='Boletos', url='', grupo=cooperativa)
+    dbsession.add(menu3)
+    menu4 = models.Menu(nombre='Pasajes', url='', grupo=cooperativa)
+    dbsession.add(menu4)
+    menu5 = models.Menu(nombre='Boletos', url='', grupo=cliente)
+    dbsession.add(menu5)
+
+    # Item
+    item1 = models.Item(nombre='Comprar boletos', url='#!/inicio', es_menu=False, menu=menu1)
+    dbsession.add(item1)
+    item2 = models.Item(nombre='Boletos comprados', url='#!/mis-boletos', es_menu=False, menu=menu1)
+    dbsession.add(item2)
+    item3 = models.Item(nombre='Todos los pasajes', url='#!/list-pasajes', es_menu=False, menu=menu2)
+    dbsession.add(item3)
+    item4 = models.Item(nombre='Comprar boletos', url='#!/inicio', es_menu=False, menu=menu3)
+    dbsession.add(item4)
+    item5 = models.Item(nombre='Boletos comprados', url='#!/mis-boletos', es_menu=False, menu=menu3)
+    dbsession.add(item5)
+    item6 = models.Item(nombre='Todos los pasajes', url='#!/list-pasajes', es_menu=False, menu=menu4)
+    dbsession.add(item6)
+    item7 = models.Item(nombre='Comprar boletos', url='#!/inicio', es_menu=False, menu=menu5)
+    dbsession.add(item7)
+    item8 = models.Item(nombre='Boletos comprados', url='#!/mis-boletos', es_menu=False, menu=menu5)
+    dbsession.add(item8)
+
     # User
-    editor = models.User(name='editor', role='editor', rol=admin)
-    editor.set_password('editor')
-    dbsession.add(editor)
-    basic = models.User(name='basic', role='basic', rol=cliente)
-    basic.set_password('basic')
+    u_administrador = models.User(name='admin', role='editor', rol=r_admin, grupo=administrador)
+    u_administrador.set_password('admin')
+    dbsession.add(u_administrador)
+    cooperativa_loja = models.User(name='loja', role='cooperativa',
+                         rol=r_cooperativa, grupo=cooperativa)
+    cooperativa_loja.set_password('loja')
+    dbsession.add(cooperativa_loja)
+    cooperativa_cariamanga = models.User(name='cariamanga', role='cooperativa',
+                                   rol=r_cooperativa, grupo=cooperativa)
+    cooperativa_cariamanga.set_password('cariamanga')
+    dbsession.add(cooperativa_cariamanga)
+    basic = models.User(name='cliente', role='basic', rol=r_cliente, grupo=cliente)
+    basic.set_password('cliente')
     dbsession.add(basic)
 
     # Pagina 
-    page = models.Page(
-        name='FrontPage',
-        creator=editor,
-        data='This is the front page',
-    )
-    dbsession.add(page)
+    # page = models.Page(
+    #     name='FrontPage',
+    #     creator=editor,
+    #     data='This is the front page',
+    # )
+    # dbsession.add(page)
 
     # Sitio
     loja = models.Sitio(ciudad='Loja', terminal='Av. Isidro Ayora')
@@ -42,9 +91,9 @@ def setup_models(dbsession):
     dbsession.add(guayaquil)
 
     # Cooperativa
-    cooperativa_loja = models.Cooperativa(nombre='Cooperativa Loja', user=editor)
+    cooperativa_loja = models.Cooperativa(nombre='Cooperativa Loja', user=cooperativa_loja)
     dbsession.add(cooperativa_loja)
-    cooperativa_cariamanga = models.Cooperativa(nombre='Cooperativa Cariamanga', user=editor)
+    cooperativa_cariamanga = models.Cooperativa(nombre='Cooperativa Cariamanga', user=cooperativa_cariamanga)
     dbsession.add(cooperativa_cariamanga)
 
     # Clase

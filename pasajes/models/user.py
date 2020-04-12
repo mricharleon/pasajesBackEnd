@@ -23,6 +23,9 @@ class User(Base):
     rol_id = Column(Integer, ForeignKey('roles.id'), nullable=False)
     rol = relationship('Rol', backref=backref('user', uselist=False))
 
+    grupo_id = Column(Integer, ForeignKey('grupo.id'), nullable=False)
+    grupo = relationship('Grupo', backref=backref('user', uselist=False))
+
     def set_password(self, pw):
         pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
         self.password_hash = pwhash.decode('utf8')

@@ -1,4 +1,7 @@
 from pasajes.models.pasajes import Pasaje
+from pasajes.models.unidad import Unidad
+from pasajes.models.cooperativa import Cooperativa
+from pasajes.models.user import User
 
 from datetime import datetime, timedelta
 from dateutil.parser import parse
@@ -9,9 +12,21 @@ class RepositorioPasaje:
     
     @classmethod
     def get_all_pasajes(cls, request):
-        query_pasajes = request.dbsession.query(Pasaje).filter().order_by(Pasaje.asientos_disponibles).all()
+
+        query_pasajes = request.dbsession.query(Pasaje).filter().order_by(Pasaje.salida).all()
 
         return query_pasajes
+        
+
+    @classmethod
+    def get_all_pasajes_cooperativa(cls, request, id_usuario):
+
+        query_pasajes = request.dbsession.query(Pasaje).join(Unidad).filter(
+            Unidad.cooperativa).join(Cooperativa).filter(
+            Cooperativa.user_id == id_usuario).order_by(Pasaje.salida).all()
+
+        return query_pasajes
+
 
     @classmethod
     def all_pasajes(cls, request, fecha, origen, destino):

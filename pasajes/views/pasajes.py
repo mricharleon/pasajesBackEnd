@@ -15,7 +15,7 @@ from .. api.pasajes import RepositorioPasaje
 # Obtiene todos los pasajes ecistentes
 @view_config(route_name='get_all_pasajes',
              renderer='json',
-             permission="edit")
+             permission="view")
 def get_all_pasajes_api(request):
     pasajes = RepositorioPasaje.get_all_pasajes(request)
     return pasajes

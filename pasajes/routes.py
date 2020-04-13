@@ -68,9 +68,9 @@ def includeme(config):
 
     # Boletos
     config.add_route('get_boletos', # Ruta para get all
-                     '/api/boletos/{id_usuario}')
+                     '/api/get-boletos')
     config.add_route('api_boletos', # Ruta para POST
-                     'api/boletos')
+                     '/api/boletos')
     config.add_route('api_boleto', # Ruta para GET y DELETE
                      '/api/boleto/{id_boleto}')
     
@@ -84,7 +84,7 @@ class EditorResource(object):
 
     def __acl__(self):
         return [
-            (Allow, 'role:editor', 'edit'),
-            (Allow, 'role:editor', 'view'),
+            (Allow, 'role:editor', ['edit', 'view']),
+            (Allow, 'role:cooperativa', ['view', 'edit']),
             (Allow, 'role:basic', 'view'),
         ]

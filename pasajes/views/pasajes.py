@@ -17,7 +17,13 @@ from .. api.pasajes import RepositorioPasaje
              renderer='json',
              permission="view")
 def get_all_pasajes_api(request):
-    pasajes = RepositorioPasaje.get_all_pasajes(request)
+
+    if request.user.grupo.nombre == 'Cooperativa':
+        id_usuario = request.user.id
+        pasajes = RepositorioPasaje.get_all_pasajes_cooperativa(request, id_usuario)
+    else:
+        pasajes = RepositorioPasaje.get_all_pasajes(request)
+        
     return pasajes
 
 # Obtiene todos los pasajes de acuerdo a la fecha, origen y destino

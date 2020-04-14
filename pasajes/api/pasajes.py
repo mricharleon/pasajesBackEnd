@@ -46,6 +46,20 @@ class RepositorioPasaje:
         return query_pasaje
     
     @classmethod
+    def add_pasaje(cls, request, pasaje: Pasaje):
+
+        db_pasaje = Pasaje()
+        db_pasaje = pasaje
+        # db_pasaje.numero_asientos = boleto.numero_asientos
+        # db_pasaje.precio_total = boleto.precio_total
+        # db_pasaje.user_id = boleto.user_id
+        # db_pasaje.pasaje_id = boleto.pasaje_id
+
+        request.dbsession.add(db_pasaje)
+
+        return db_pasaje
+    
+    @classmethod
     def update_pasaje(cls, request, pasaje):
 
         db_pasaje = request.dbsession.query(Pasaje).filter(Pasaje.id == pasaje.id).first()

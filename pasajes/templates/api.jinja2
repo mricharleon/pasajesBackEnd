@@ -132,7 +132,16 @@
             <tbody>
                 <tr>
                     <td><a href="api/unidades">GET /api/unidades</a></td>
-                    <td>Obtiene todos los objetos unidades</td>
+                    <td>
+                        <ul>
+                            <li>
+                                Obtiene solo objetos del usuario logueado
+                            </li>
+                            <li>
+                                Obtiene todos los objetos si es usuario administrador
+                            </li>
+                        </ul>  
+                    </td>
                 </tr>
                 <tr>
                     <td><a href="api/unidad/1">GET /api/unidad/{id}</a></td>

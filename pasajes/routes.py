@@ -52,7 +52,8 @@ def includeme(config):
                      
     # Unidad
     config.add_route('get_unidades',
-                     '/api/unidades')
+                     '/api/unidades',
+                     factory=editor_factory)
     config.add_route('get_unidad',
                      '/api/unidad/{id_unidad}')
 
@@ -64,6 +65,9 @@ def includeme(config):
                      '/api/pasajes/{fecha}/{origen}/{destino}')
     config.add_route('get_pasaje', # Ruta para UPDATE, GET
                      '/api/pasaje/{id_pasaje}',
+                     factory=editor_factory)
+    config.add_route('add_pasaje',
+                     '/api/pasaje',
                      factory=editor_factory)
 
     # Boletos
@@ -84,7 +88,7 @@ class EditorResource(object):
 
     def __acl__(self):
         return [
-            (Allow, 'role:editor', ['edit', 'view']),
-            (Allow, 'role:cooperativa', ['view', 'edit']),
+            (Allow, 'role:editor', ['view', 'edit', 'add']),
+            (Allow, 'role:cooperativa', ['view', 'edit', 'add']),
             (Allow, 'role:basic', 'view'),
         ]

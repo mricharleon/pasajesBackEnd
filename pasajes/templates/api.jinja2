@@ -132,7 +132,16 @@
             <tbody>
                 <tr>
                     <td><a href="api/unidades">GET /api/unidades</a></td>
-                    <td>Obtiene todos los objetos unidades</td>
+                    <td>
+                        <ul>
+                            <li>
+                                Obtiene solo objetos del usuario logueado
+                            </li>
+                            <li>
+                                Obtiene todos los objetos si es usuario administrador
+                            </li>
+                        </ul>  
+                    </td>
                 </tr>
                 <tr>
                     <td><a href="api/unidad/1">GET /api/unidad/{id}</a></td>
@@ -151,8 +160,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="">POST /api/pasaje *</a></td>
-                    <td>Crea un objeto pasajes</td>
+                    <td><a href="">POST /api/pasaje</a></td>
+                    <td>Crea un objeto pasaje</td>
                 </tr>
                 <tr>
                     <td><a href="api/all/pasajes">GET /api/pasajes</a></td>

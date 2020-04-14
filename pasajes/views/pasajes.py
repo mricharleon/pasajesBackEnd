@@ -3,7 +3,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.response import Response
 from json import loads
 
-from ..viewmodels.update_pasaje_viewmodel import UpdatePasajeViewModel
+from ..viewmodels.update_pasaje_viewmodel import CreatePasajeViewModel, UpdatePasajeViewModel
 
 # Modelos
 from .. import models
@@ -15,7 +15,7 @@ from .. api.pasajes import RepositorioPasaje
 # Obtiene todos los pasajes ecistentes
 @view_config(route_name='get_all_pasajes',
              renderer='json',
-             permission="view")
+             permission="edit")
 def get_all_pasajes_api(request):
 
     if request.user.grupo.nombre == 'Cooperativa':
@@ -40,6 +40,7 @@ def get_pasajes_api(request):
 @view_config(route_name='get_pasaje',
              renderer='json',)
 def get_pasaje_api(request):
+
     id_pasaje = request.matchdict['id_pasaje']
     pasaje = RepositorioPasaje.get_pasaje(request, id_pasaje)
     return pasaje
@@ -52,8 +53,6 @@ def get_pasaje_api(request):
 def put_pasaje_api(request):
     pasaje_id = request.matchdict.get('id_pasaje')
     pasaje = RepositorioPasaje.get_pasaje(request, pasaje_id)
-    if pasaje_id == '__first__':
-        pasaje_id = RepositorioPasaje.get_all_pasajes(request)[0].id
 
     if not pasaje:
         msg = "El pasaje con el Id '{}' no fue encontrado.".format(pasaje_id)
@@ -74,3 +73,25 @@ def put_pasaje_api(request):
         return Response(status=200, json_body={'msg':'Pasaje actualizado correctamente.'})
     except:
         return Response(status=400, json_body={'msg':'Pasaje no ha sido actualizado.'})
+
+        
+# Guarda un pasaje Editado
+@view_config(route_name='add_pasaje',
+             request_method='POST',
+             permission="add")
+def add_pasaje_api(request):
+
+    try:
+        pasaje_data = request.json_body
+    except Exception as x:
+        return Response(status=400, json_body={'msg': 'No se pudo parsear tu petición POST como un JSON: ' + str(x)})
+
+    vm = CreatePasajeViewModel(pasaje_data)
+    vm.compute_details()
+    if vm.errors:
+        return Response(status=400, json_body=vm.error_msg)
+    try:
+        pasaje = RepositorioPasaje.add_pasaje(request, vm.pasaje)
+        return Response(status=200, json_body={'msg': 'Pasaje registrado correctamente'})
+    except Exception as x:
+        return Response(status=500, json_body={'msg': 'No se pudo guardar el pasaje: ' + str(x)})

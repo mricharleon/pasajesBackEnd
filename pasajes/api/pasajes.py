@@ -50,11 +50,6 @@ class RepositorioPasaje:
 
         db_pasaje = Pasaje()
         db_pasaje = pasaje
-        # db_pasaje.numero_asientos = boleto.numero_asientos
-        # db_pasaje.precio_total = boleto.precio_total
-        # db_pasaje.user_id = boleto.user_id
-        # db_pasaje.pasaje_id = boleto.pasaje_id
-
         request.dbsession.add(db_pasaje)
 
         return db_pasaje

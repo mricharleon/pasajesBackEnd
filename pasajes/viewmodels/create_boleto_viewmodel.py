@@ -5,9 +5,10 @@ from .base_viewmodel import ViewModelBase
 
 
 class CreateBoletoViewModel(ViewModelBase):
-    def __init__(self, data_dict):
+    def __init__(self, id_usuario, data_dict):
         super().__init__()
         self.data_dict = data_dict
+        self.data_dict['user_id'] = id_usuario
         self.boleto = None
 
     def compute_details(self):

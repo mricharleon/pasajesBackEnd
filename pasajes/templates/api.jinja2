@@ -23,11 +23,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="#">POST /api/login *</a></td>
-                    <td>Crea una sesion en el proyecto </td>
+                    <td><a href="#">POST /api/login</a></td>
+                    <td>Crea una sesion, auth_tkt en el proyecto </td>
                 </tr>
                 <tr>
-                    <td><a href="#">GET /api/logout *</a></td>
+                    <td><a href="#">GET /api/logout</a></td>
                     <td>Cierra una sesion en el proyecto </td>
                 </tr>
             </tbody>
@@ -132,7 +132,16 @@
             <tbody>
                 <tr>
                     <td><a href="api/unidades">GET /api/unidades</a></td>
-                    <td>Obtiene todos los objetos unidades</td>
+                    <td>
+                        <ul>
+                            <li>
+                                Obtiene solo objetos del usuario logueado
+                            </li>
+                            <li>
+                                Obtiene todos los objetos si es usuario administrador
+                            </li>
+                        </ul>  
+                    </td>
                 </tr>
                 <tr>
                     <td><a href="api/unidad/1">GET /api/unidad/{id}</a></td>
@@ -151,8 +160,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="">POST /api/pasaje *</a></td>
-                    <td>Crea un objeto pasajes</td>
+                    <td><a href="">POST /api/pasaje</a></td>
+                    <td>Crea un objeto pasaje</td>
                 </tr>
                 <tr>
                     <td><a href="api/all/pasajes">GET /api/pasajes</a></td>
@@ -191,8 +200,8 @@
                     <td>Crea un objeto boleto</td>
                 </tr>
                 <tr>
-                    <td><a href="api/boletos/2">GET /api/boletos/:id_usuario</a></td>
-                    <td>Obtiene todos los objetos boletos que registre el usuario</td>
+                    <td><a href="api/boletos/2">GET /api/boletos</a></td>
+                    <td>Obtiene todos los objetos boletos que registre el usuario logueado</td>
                 </tr>
                 <tr>
                     <td><a href="api/boleto/20">GET /api/boleto/{id_boleto} </a></td>

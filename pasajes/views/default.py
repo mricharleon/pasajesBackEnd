@@ -33,5 +33,4 @@ def jsonDefault(object):
 def view_api(request):
     page = 'API'
     content = 'contenido'
-    edit_url = 'url de edicion'
     return dict(page=page, content=content)

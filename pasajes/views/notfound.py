@@ -1,10 +1,7 @@
 from pyramid.view import notfound_view_config
-from pyramid.response import Response
 
 
-@notfound_view_config(renderer='json')
+@notfound_view_config(renderer='../templates/404.jinja2')
 def notfound_view(request):
-
-    msg = 'Página no encontrada!'
-    
-    return Response(status=404, json_body={ 'msg':msg })
+    request.response.status = 404
+    return {}

@@ -34,26 +34,6 @@ redis-server
 pserve development.ini 
 ~~~
 
-## Recursos
-| Endpoint | HTTP | Descripción |
-|---|---|---|
-| /api/login | POST | Crea una sesion, auth_tkt en el proyecto |
-| /api/logout | GET | Cierra una sesion en el proyecto |
-| /api/roles | GET | Obtiene todos los objetos roles |
-| /api/usuario/{id_usuario} | GET | Obtiene un solo objeto usuario |
-| /api/sitios | GET | Obtiene todos los objetos de sitios |
-| /api/sitio/{id_sitio} | GET | Obtiene un solo objeto sitio |
-| /api/cooperativas | GET | Obtiene todos los objetos cooperativas |
-| /api/cooperativa/{id}| GET | Obtiene un solo objeto cooperativa |
-| /api/clases | GET | Obtiene todos los objetos clases |
-| /api/unidades | GET | Obtiene solo objetos del usuario logueado, Obtiene todos los objetos si es usuario administrador |
-| /api/unidad/{id} | GET | Obtiene un solo objeto unidad |
-| /api/pasaje | POST | Crea un objeto pasaje |
-| /api/pasajes | GET | Obtiene todos los objetos pasajes |
-| /api/pasajes/:fecha/:origen/:destino | GET | Obtiene todos los objetos pasajes (fecha, origen y destino) |
-| /api/pasaje/{id} | GET | Obtiene un solo objeto pasaje |
-| /api/pasaje/{id_pasaje} | PUT | Actualiza un objeto pasaje |
-| /api/boleto | POST | Crea un objeto boleto |
-| /api/boletos | GET | Obtiene todos los objetos boletos que registre el usuario logueado |
-| /api/boleto/{id_boleto} | GET | Obtiene un solo objeto boleto |
-| /api/boleto/{id_boleto} | DELETE | Elimina un objeto boleto |
+## Usuarios
+- `User:` editor  `Pass:` editor 
+- `User:` basic  `Pass:` basic

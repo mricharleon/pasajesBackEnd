@@ -9,32 +9,26 @@ from pyramid.view import (
     view_config,
 )
 
-from sqlalchemy.orm import lazyload
-
-from ..models import User, Grupo
+from ..models import User
 
 
 @view_config(route_name='api_login', renderer='json')
 def api_login(request):
-
-    msg = 'Credenciales no enviadas!'
+    msg = ''
     login_data = request.json_body
 
     if 'login' in login_data and 'password' in login_data:
         login = login_data.get('login')
         password = login_data.get('password')
-        user = request.dbsession.query(User).filter(User.name == login).first()
+        user = request.dbsession.query(User).filter_by(name=login).first()
         if user is not None and user.check_password(password):
-            # Graba en la session el usuario (se grabará en redis)
             request.session['user'] = user
             headers = remember(request, user.id)
             response = Response( json_body=user.__json__(request) )
             response.headers.extend(headers)
             return response
-        msg = 'Credenciales incorrectas!'
-        
-    return Response(status=403, body=msg)
-
+        msg = 'Failed login'
+    return msg
 
 @view_config(route_name='api_logout')
 def api_logout(request):

@@ -1,4 +1,13 @@
-from . permissions import editor_factory
+from pyramid.httpexceptions import (
+    HTTPNotFound,
+    HTTPFound,
+)
+from pyramid.security import (
+    Allow,
+    Everyone,
+)
+
+from . import models
 
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
@@ -10,10 +19,6 @@ def includeme(config):
     # Autenticacion
     config.add_route('api_login', '/api/login')
     config.add_route('api_logout', '/api/logout')
-
-    # Menu 
-    config.add_route('get_menu',
-                     '/api/menu')
 
     # Rol
     config.add_route('get_roles',
@@ -43,8 +48,7 @@ def includeme(config):
                      
     # Unidad
     config.add_route('get_unidades',
-                     '/api/unidades',
-                     factory=editor_factory)
+                     '/api/unidades')
     config.add_route('get_unidad',
                      '/api/unidad/{id_unidad}')
 
@@ -57,14 +61,26 @@ def includeme(config):
     config.add_route('get_pasaje', # Ruta para UPDATE, GET
                      '/api/pasaje/{id_pasaje}',
                      factory=editor_factory)
-    config.add_route('add_pasaje',
-                     '/api/pasaje',
-                     factory=editor_factory)
 
     # Boletos
     config.add_route('get_boletos', # Ruta para get all
-                     '/api/get-boletos')
+                     '/api/boletos/{id_usuario}')
     config.add_route('api_boletos', # Ruta para POST
-                     '/api/boletos')
+                     'api/boletos')
     config.add_route('api_boleto', # Ruta para GET y DELETE
                      '/api/boleto/{id_boleto}')
+    
+
+def editor_factory(request):
+    return EditorResource()
+
+class EditorResource(object):
+    def __init__(self):
+        pass
+
+    def __acl__(self):
+        return [
+            (Allow, 'role:editor', 'edit'),
+            (Allow, 'role:editor', 'view'),
+            (Allow, 'role:basic', 'view'),
+        ]

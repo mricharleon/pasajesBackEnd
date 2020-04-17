@@ -14,9 +14,6 @@ from .sitio import Sitio
 from .pasajes import Pasaje
 from .cooperativa import Cooperativa
 from .boleto import Boleto
-from .menu import Menu
-from .menu import Item
-from .grupo import Grupo
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup

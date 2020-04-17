@@ -24,7 +24,7 @@ class User(Base):
     rol = relationship('Rol', backref=backref('user', uselist=False))
 
     grupo_id = Column(Integer, ForeignKey('grupo.id'), nullable=False)
-    grupo = relationship('Grupo', backref=backref('user', uselist=False))
+    grupo = relationship('Grupo', lazy='subquery', backref=backref('user', uselist=False))
 
     def set_password(self, pw):
         pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())

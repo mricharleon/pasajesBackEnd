@@ -16,7 +16,6 @@ from .. api.pasajes import RepositorioPasaje
              request_method='GET',
              renderer='json')
 def get_boletos_api(request):
-
     id_usuario = request.user.id
     boletos = RepositorioBoleto.all_boletos(request, id_usuario)
 

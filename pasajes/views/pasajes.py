@@ -30,11 +30,15 @@ def get_all_pasajes_api(request):
 @view_config(route_name='get_pasajes',
              renderer='json')
 def get_pasajes_api(request):
+    
     fecha = request.matchdict['fecha']
     origen = request.matchdict['origen']
     destino = request.matchdict['destino']
     pasajes = RepositorioPasaje.all_pasajes(request, fecha, origen, destino)
-    return pasajes
+    if pasajes:
+        return pasajes
+    return dict(msg='No hay resultados para tu búsqueda')
+    
 
 # Obtiene un solo pasaje de acuerdo a su Id
 @view_config(route_name='get_pasaje',

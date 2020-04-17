@@ -1,13 +1,4 @@
-from pyramid.httpexceptions import (
-    HTTPNotFound,
-    HTTPFound,
-)
-from pyramid.security import (
-    Allow,
-    Everyone,
-)
-
-from . import models
+from . permissions import editor_factory
 
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
@@ -77,18 +68,3 @@ def includeme(config):
                      '/api/boletos')
     config.add_route('api_boleto', # Ruta para GET y DELETE
                      '/api/boleto/{id_boleto}')
-    
-
-def editor_factory(request):
-    return EditorResource()
-
-class EditorResource(object):
-    def __init__(self):
-        pass
-
-    def __acl__(self):
-        return [
-            (Allow, 'role:editor', ['view', 'edit', 'add']),
-            (Allow, 'role:cooperativa', ['view', 'edit', 'add']),
-            (Allow, 'role:basic', 'view'),
-        ]

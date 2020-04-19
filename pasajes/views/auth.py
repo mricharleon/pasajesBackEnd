@@ -9,6 +9,8 @@ from pyramid.view import (
     view_config,
 )
 
+from sqlalchemy import or_
+
 from sqlalchemy.orm import lazyload
 
 from ..models import User, Grupo
@@ -23,7 +25,7 @@ def api_login(request):
     if 'login' in login_data and 'password' in login_data:
         login = login_data.get('login')
         password = login_data.get('password')
-        user = request.dbsession.query(User).filter(User.name == login).first()
+        user = request.dbsession.query(User).filter(or_(User.username == login, User.email == login)).first()
         if user is not None and user.check_password(password):
             # Graba en la session el usuario (se grabará en redis)
             request.session['user'] = user
@@ -54,7 +56,7 @@ def login(request):
     if 'form.submitted' in request.params:
         login = request.params['login']
         password = request.params['password']
-        user = request.dbsession.query(User).filter_by(name=login).first()
+        user = request.dbsession.query(User).filter(or_(User.username==login, User.email==login)).first()
         if user is not None and user.check_password(password):
             headers = remember(request, user.id)
             return HTTPFound(location=next_url, headers=headers)

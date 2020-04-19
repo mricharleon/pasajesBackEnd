@@ -121,6 +121,6 @@ Data.fs*
 .sw?
 .DS_Store
 
-pasajes/alembic
+pasajes/alembic/versions/
 dump.rdb
 pasajes.sqlite

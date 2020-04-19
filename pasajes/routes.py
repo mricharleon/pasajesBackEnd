@@ -15,11 +15,11 @@ def includeme(config):
     config.add_route('get_menu',
                      '/api/menu')
 
-    # Rol
-    config.add_route('get_roles',
-                     '/api/roles')
-
     # Usuarios
+    config.add_route('api_check_username',
+                     '/api/check-username/{username}')
+    config.add_route('api_check_email',
+                     '/api/check-email/{email}')
     config.add_route('api_usuario',
                      '/api/usuario/{id_usuario}')
 

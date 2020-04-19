@@ -15,13 +15,12 @@ class User(Base):
     """ The SQLAlchemy declarative model class for a User object. """
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    name = Column(Text, nullable=False, unique=True)
-    role = Column(Text, nullable=False)
+    username = Column(Text, nullable=False, unique=True)
+    nombre = Column(Text, nullable=False)
+    apellido = Column(Text, nullable=False)
+    email = Column(Text, nullable=False, unique=True)
 
     password_hash = Column(Text)
-
-    rol_id = Column(Integer, ForeignKey('roles.id'), nullable=False)
-    rol = relationship('Rol', backref=backref('user', uselist=False))
 
     grupo_id = Column(Integer, ForeignKey('grupo.id'), nullable=False)
     grupo = relationship('Grupo', lazy='subquery', backref=backref('user', uselist=False))
@@ -37,6 +36,9 @@ class User(Base):
         return False
 
     def __json__(self, request):
-        return {'name':self.name,
-                'role':self.role,
-                'id':self.id}
+        return {'id': self.id,
+                'username': self.username,
+                'nombre':self.nombre,
+                'apellido':self.apellido,
+                'email':self.email,
+               }

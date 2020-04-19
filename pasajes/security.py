@@ -39,12 +39,12 @@ def get_user(request):
         try:
             user = request.session['user']
             print('Recuperando data de [{}] desde Redis Session! '.format(
-                user.name) )
+                user.username) )
         except:
             user = request.dbsession.query(User).filter(User.id == user_id).first()
             request.session['user'] = user
             print('Recuperando data de [{}] desde BD! '.format(
-                user.name))
+                user.username))
 
         return user
 

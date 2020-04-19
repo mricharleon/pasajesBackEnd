@@ -9,10 +9,9 @@
     <p class="lead">
         BackEnd del proyecto <strong>Pasajes!</strong> desarrollado con <strong>Pyramid.</strong>
     </p>
-    <a href="https://github.com/mricharleon/pasajesBackEnd" target="blank" class="badge badge-secondary">Proyecto en GitHub</a>
     <hr class="my-4">
     <div>
-        <strong class="endpoints">Recursos (EndPoints) | Pendientes (*)</strong>
+        <strong class="endpoints">Recursos (EndPoints)</strong>
         <table class="table">
             <caption>[1] Autenticación</caption>
             <thead>
@@ -34,22 +33,6 @@
         </table>
         
         <table class="table">
-            <caption>[2] Rol</caption>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="api/roles">GET /api/roles</a></td>
-                    <td>Obtiene todos los objetos roles</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table">
             <caption>[3] Usuario</caption>
             <thead>
                 <tr>
@@ -61,6 +44,14 @@
                 <tr>
                     <td><a href="api/usuario/1">GET /api/usuario/{id_usuario}</a></td>
                     <td>Obtiene un solo objeto usuario</td>
+                </tr>
+                <tr>
+                    <td><a href="api/check-username/juan">GET /api/check-username/{username}</a></td>
+                    <td>Verifica que no exista un username ya registrado</td>
+                </tr>
+                <tr>
+                    <td><a href="api/check-email/juanperez@gmail.com">GET /api/check-email/{email}</a></td>
+                    <td>Verifica que no exista un email ya registrado</td>
                 </tr>
             </tbody>
         </table>

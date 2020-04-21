@@ -65,6 +65,8 @@ def setup_models(dbsession):
                                   nombre='Admin', 
                                   apellido='Admin', 
                                   email='admin@gmail.com', 
+                                  activo=True,
+                                  cod_verificacion=None,
                                   grupo=administrador)
     u_administrador.set_password('admin')
     dbsession.add(u_administrador)
@@ -72,6 +74,8 @@ def setup_models(dbsession):
                                    nombre='Loja',
                                    apellido='Loja', 
                                    email='loja@gmail.com', 
+                                   activo=True,
+                                   cod_verificacion=None,
                                    grupo=cooperativa)
     cooperativa_loja.set_password('loja')
     dbsession.add(cooperativa_loja)
@@ -79,13 +83,17 @@ def setup_models(dbsession):
                                          nombre='Cariamanga',
                                          apellido='Cariamanga', 
                                          email='cariamanga@gmail.com', 
+                                         activo=True,
+                                         cod_verificacion=None,
                                          grupo=cooperativa)
     cooperativa_cariamanga.set_password('cariamanga')
     dbsession.add(cooperativa_cariamanga)
     basic = models.User(username='juan', 
                         nombre='Juan', 
                         apellido='Perez', 
-                        email='juanperez@gmail.com', 
+                        email='juanperez@gmail.com',
+                        activo=True,
+                        cod_verificacion=None,
                         grupo=cliente)
     basic.set_password('juan')
     dbsession.add(basic)

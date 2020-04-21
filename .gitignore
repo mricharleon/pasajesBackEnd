@@ -121,7 +121,7 @@ Data.fs*
 .sw?
 .DS_Store
 
-pasajes/alembic/versions/
+pasajes/alembic/versions/*
 dump.rdb
 pasajes.sqlite
 development_local.ini

@@ -20,6 +20,8 @@ from sqlalchemy.orm import relationship, backref
 
 from .meta import Base
 
+from .. constantes import Codigo
+
 
 class User(Base):
     """ The SQLAlchemy declarative model class for a User object. """
@@ -65,13 +67,11 @@ class User(Base):
         return passw
 
     def generar_pass_temporal(self):
-        TAMANIO_PASS = 12
-        pass_temporal = self.generar_codigo(TAMANIO_PASS)
+        pass_temporal = self.generar_codigo(Codigo.TAMANIO_PASS_TEMPORAL)
         return pass_temporal
     
     def generar_cod_verificacion(self):
-        TAMANIO_COD_VERIFICACION = 36
-        pass_temporal = self.generar_codigo(TAMANIO_COD_VERIFICACION)
+        pass_temporal = self.generar_codigo(Codigo.TAMANIO_COD_VERIFICACION)
         return pass_temporal
 
     def enviar_mensaje(self, request, password, asunto='', destinatario=''):

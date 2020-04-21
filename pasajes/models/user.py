@@ -85,7 +85,8 @@ class User(Base):
                            </head>
                            <body>
                            <div style="background-color: #f1f1f1;
-                                       padding: 0 10px;">
+                                       padding: 0 10px;
+                                       color: #3e3e3e;">
                                 <h3 style="background-color: #e06767;
                                            color: white;
                                            padding: 3px 6px;

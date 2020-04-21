@@ -124,3 +124,4 @@ Data.fs*
 pasajes/alembic/versions/
 dump.rdb
 pasajes.sqlite
+development_local.ini

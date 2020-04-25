@@ -1,6 +1,5 @@
 from pasajes.models.user import User
 
-
 class RepositorioUsario:
     
     @classmethod
@@ -48,3 +47,24 @@ class RepositorioUsario:
             msg_email = 'Email disponible'
 
         return dict(status_email=status_email, msg_email=msg_email)
+
+    @classmethod
+    def check_cod_verificacion(cls, request, cod):
+
+        user = request.dbsession.query(User).filter_by(cod_verificacion=cod).first()
+        if user is not None:
+            try:
+                user.cod_verificacion is cod
+                return user
+            except:
+                return user
+        return user
+    
+    @classmethod
+    def add_usuario(cls, request, usuario:User):
+
+        db_usuario = User()
+        db_usuario = usuario
+        request.dbsession.add(db_usuario)
+
+        return db_usuario

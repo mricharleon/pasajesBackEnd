@@ -20,8 +20,16 @@ def includeme(config):
                      '/api/check-username/{username}')
     config.add_route('api_check_email',
                      '/api/check-email/{email}')
+    config.add_route('api_check_cod_verificacion',
+                     '/api/check-cod-verificacion/{cod_verificacion}')
     config.add_route('api_usuario',
                      '/api/usuario/{id_usuario}')
+    config.add_route('usuarios',  # Ruta para POST
+                     '/api/usuarios')
+
+    # Grupos
+    config.add_route('get_grupos',
+                     '/api/grupos')
 
     # Sitio
     config.add_route('get_sitios',

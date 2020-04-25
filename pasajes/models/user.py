@@ -20,7 +20,7 @@ from sqlalchemy.orm import relationship, backref
 
 from .meta import Base
 
-from .. constantes import Codigo
+from .. import constants as enum
 
 
 class User(Base):
@@ -39,9 +39,18 @@ class User(Base):
     grupo_id = Column(Integer, ForeignKey('grupo.id'), nullable=False)
     grupo = relationship('Grupo', lazy='subquery', backref=backref('user', uselist=False))
 
+    def set_activo(self, estado):
+        self.activo = estado
+    
+    def remove_cod_verificacion(self):
+        self.cod_verificacion = None
+
     def set_password(self, pw):
         pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
         self.password_hash = pwhash.decode('utf8')
+    
+    def set_cod_verificacion(self, cod):
+        self.cod_verificacion = cod
 
     def check_password(self, pw):
         if self.password_hash is not None:
@@ -49,17 +58,8 @@ class User(Base):
             return bcrypt.checkpw(pw.encode('utf8'), expected_hash)
         return False
     
-    def check_cod_verificacion(self, cod):
-        if self.cod_verificacion is not None:
-            try:
-                self.cod_verificacion is cod
-                return True
-            except:
-                return False
-        return False
-    
     def generar_codigo(self, tamanio):
-        valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<=>{}[]@#%&+"
+        valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         crypto = SystemRandom()
         passw = ''
         for i in range(tamanio):
@@ -67,14 +67,14 @@ class User(Base):
         return passw
 
     def generar_pass_temporal(self):
-        pass_temporal = self.generar_codigo(Codigo.TAMANIO_PASS_TEMPORAL)
+        pass_temporal = self.generar_codigo(enum.Codigo.TAMANIO_PASS_TEMPORAL.value)
         return pass_temporal
     
     def generar_cod_verificacion(self):
-        pass_temporal = self.generar_codigo(Codigo.TAMANIO_COD_VERIFICACION)
+        pass_temporal = self.generar_codigo(enum.Codigo.TAMANIO_COD_VERIFICACION.value)
         return pass_temporal
 
-    def enviar_mensaje(self, request, password, asunto='', destinatario=''):
+    def enviar_mensaje(self, request, password, asunto=''):
 
         status = False
         msg = ''
@@ -84,24 +84,26 @@ class User(Base):
                                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                            </head>
                            <body>
-                           <div style="background-color: #f1f1f1;
-                                       padding: 0 10px;
-                                       color: #3e3e3e;">
+                           <div style="background-color: #f9f9f9;
+                                       padding: 0 20px;
+                                       color: #3e3e3e;
+                                       border-radius: 30px 30px 0 0;">
                                 <h3 style="background-color: #e06767;
                                            color: white;
                                            padding: 3px 6px;
                                            margin: 0px -10px !important;
                                            border-radius: 4px;
                                            text-align: center;">Hola, {0}</h3> 
-                                <p>Usted acaba de crear una cuenta en el sistema de gestión de pasajes</p>
-                                <div>
-                                    <p>A continuación se detallan sus credenciales:</p>
+                                <p>Acabas de crear una cuenta en el sistema de gestión de pasajes, Genial!</p>
+                                <p>Al momento tu cuenta se encuentra en estado inactivo, debes seguir los siguientes pasos y estará activada.</p>
+                                <div style="margin: 40px 0;">
+                                    <p>Sus credenciales son:</p>
                                     <ul>
-                                        <li>Username: {1}</li>
-                                        <li>Password: {2} <span style="color: #888888;">(Contraseña temporal, por favor cambiarla)</span></li>
+                                        <li>Usuario: {1}</li>
+                                        <li>Contraseña: {2} <span style="color: #888888;">(Contraseña automática, podrá cambiarla mas adelante)</span></li>
                                     </ul>
                                 </div>
-                                <p>Por favor para activar su cuenta, dar click o copiar el siguiente enlace: <a href='{3}{4}' target='_blank'>Activar cuenta ahora!</a></p>
+                                <p>Para activar tu cuenta, abrir el siguiente enlace: <a href='{3}{4}' target='_blank'>Activar cuenta ahora!</a></p>
                                 <hr>
                                 <p style="background-color: #ececec;
                                           color: #7b7b7b;
@@ -114,13 +116,13 @@ class User(Base):
                         .format(self.nombre, 
                                 self.username,
                                 password,
-                                'http://localhost:1234/',
-                                self.generar_cod_verificacion()
+                                enum.FrontEnd.HOST.value + 'activar/',
+                                self.cod_verificacion
                                 )
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = 'Pasajes! - {}'.format(asunto)
+        msg['Subject'] = 'Pasajes! - Creación de usuario {}'.format(asunto)
         msg['From'] = settings['email.sender']
-        msg['To'] = destinatario
+        msg['To'] = self.email
         password = settings['email.password']
         msg.add_header('Content-Type', 'text/html; charset=utf-8')
         msg.attach( MIMEText(email_content, 'html') ) 
@@ -136,7 +138,7 @@ class User(Base):
             server.sendmail(msg['From'], [msg['To']], msg.as_string())
             server.quit()
             status = True
-            msg = 'Se realizo con éxito el envió del mensaje'
+            msg = 'Email enviado a [{}], por favor revisarlo para activar la cuenta'.format(self.email)
         except Exception as ex:
             status = False
             msg = 'No se pudo realizar el envió del mensaje {}'.format(ex)
@@ -152,4 +154,5 @@ class User(Base):
                 'apellido': self.apellido,
                 'email': self.email,
                 'activo': self.activo,
+                'grupo': self.grupo.nombre,
                }

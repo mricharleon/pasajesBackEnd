@@ -14,3 +14,12 @@ class RepositorioCooperativa:
         query_cooperativa = request.dbsession.query(Cooperativa).filter(Cooperativa.id == id_cooperativa).first()
 
         return query_cooperativa
+    
+    @classmethod
+    def add_cooperativa(cls, request, cooperativa: Cooperativa):
+
+        db_cooperativa = Cooperativa()
+        db_cooperativa = cooperativa
+        request.dbsession.add(db_cooperativa)
+
+        return db_cooperativa

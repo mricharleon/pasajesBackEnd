@@ -40,6 +40,8 @@ def includeme(config):
     # Cooperativa
     config.add_route('get_cooperativas',
                      '/api/cooperativas')
+    config.add_route('cooperativas',
+                     '/api/add-cooperativas')
     config.add_route('get_cooperativa',
                      '/api/cooperativa/{id_cooperativa}')
                      

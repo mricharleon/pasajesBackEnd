@@ -42,19 +42,16 @@ def add_cooperativa_api(request):
 
     # Consulta si existe una cooperativa asignada al usuario solicitante
     user = request.session.get('user')
-    try:
+    if request.dbsession.query(Cooperativa).filter_by(user=user).first() is not None:
         c = request.dbsession.query(Cooperativa).filter_by(user=user).first()
         return Response(status=400, json_body={'titulo':'Ya existe una cooperativa!',
                                                'msg':'Actualmente tienes una cooperativa [{}] registrada'.format(c.nombre)})
-    except Exception as x:
-        return Response(status=400, json_body={'titulo': 'Ha courrido algo!',
-                                               'msg': 'Detalle del suceso: {}'.format(x)})
 
     user = request.session.get('user')
     vm.cooperativa.user_id = user.id
 
     try:
-        # cooperativa = RepositorioCooperativa.add_cooperativa(request, vm.cooperativa)
+        cooperativa = RepositorioCooperativa.add_cooperativa(request, vm.cooperativa)
         return Response(status=200, json_body={'titulo': 'Cooperativa registrada!',
                                                'msg': ''})
     except Exception as x:

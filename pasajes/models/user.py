@@ -48,7 +48,6 @@ class User(Base):
     def set_password(self, pw):
         pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
         self.password_hash = pwhash.decode('utf8')
-        print(self.password_hash, pw)
     
 
     def set_cod_verificacion(self, cod):

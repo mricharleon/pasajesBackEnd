@@ -36,7 +36,7 @@
               </p>
               {% else %}
               <p class="pull-right">
-              {{request.user.name}} <a href="{{request.route_url('logout')}}">Logout</a>
+              {{request.user.username}} <a href="{{request.route_url('logout')}}">Logout</a>
               </p>
             {% endif %}
             {% block content %}{% endblock %}

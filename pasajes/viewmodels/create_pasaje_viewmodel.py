@@ -8,7 +8,7 @@ class CreatePasajeViewModel(ViewModelBase):
     def __init__(self, data_dict):
         super().__init__()
         self.data_dict = data_dict
-        self.boleto = None
+        self.pasaje = None
 
     def compute_details(self):
 

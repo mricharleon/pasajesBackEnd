@@ -15,13 +15,21 @@ def includeme(config):
     config.add_route('get_menu',
                      '/api/menu')
 
-    # Rol
-    config.add_route('get_roles',
-                     '/api/roles')
-
     # Usuarios
+    config.add_route('api_check_username',
+                     '/api/check-username/{username}')
+    config.add_route('api_check_email',
+                     '/api/check-email/{email}')
+    config.add_route('api_check_cod_verificacion',
+                     '/api/check-cod-verificacion/{cod_verificacion}')
     config.add_route('api_usuario',
                      '/api/usuario/{id_usuario}')
+    config.add_route('usuarios',  # Ruta para POST
+                     '/api/usuarios')
+
+    # Grupos
+    config.add_route('get_grupos',
+                     '/api/grupos')
 
     # Sitio
     config.add_route('get_sitios',
@@ -32,6 +40,8 @@ def includeme(config):
     # Cooperativa
     config.add_route('get_cooperativas',
                      '/api/cooperativas')
+    config.add_route('cooperativas',
+                     '/api/add-cooperativas')
     config.add_route('get_cooperativa',
                      '/api/cooperativa/{id_cooperativa}')
                      

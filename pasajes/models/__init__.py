@@ -7,7 +7,6 @@ import zope.sqlalchemy
 # Base.metadata prior to any initialization routines
 from .page import Page  # flake8: noqa
 from .user import User  # flake8: noqa
-from .rol import Rol
 from .clase import Clase
 from .unidad import Unidad
 from .sitio import Sitio

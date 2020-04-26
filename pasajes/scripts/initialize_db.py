@@ -10,14 +10,6 @@ from .. import models
 
 def setup_models(dbsession):
     
-    # Rol
-    r_admin = models.Rol(nombre='administrador', descripcion='Usuario administrador')
-    dbsession.add(r_admin)
-    r_cooperativa = models.Rol(nombre='cooperativa', descripcion='Usuario cooperativa')
-    dbsession.add(r_cooperativa)
-    r_cliente = models.Rol(nombre='cliente', descripcion='Usuario cliente')
-    dbsession.add(r_cliente)
-
     # Grupo
     administrador = models.Grupo(nombre='Administrador')
     dbsession.add(administrador)
@@ -37,6 +29,14 @@ def setup_models(dbsession):
     dbsession.add(menu4)
     menu5 = models.Menu(nombre='Boletos', url='', grupo=cliente)
     dbsession.add(menu5)
+    menu6 = models.Menu(nombre='Cuentas', url='', grupo=administrador)
+    dbsession.add(menu6)
+    menu7 = models.Menu(nombre='Cuentas', url='', grupo=cooperativa)
+    dbsession.add(menu7)
+    menu8 = models.Menu(nombre='Cooperativa', url='', grupo=administrador)
+    dbsession.add(menu8)
+    menu9 = models.Menu(nombre='Cooperativa', url='', grupo=cooperativa)
+    dbsession.add(menu9)
 
     # Item
     item1 = models.Item(nombre='Comprar boletos', url='#!/inicio', es_menu=False, menu=menu1)
@@ -59,21 +59,55 @@ def setup_models(dbsession):
     dbsession.add(item7)
     item8 = models.Item(nombre='Listar boletos comprados', url='#!/mis-boletos', es_menu=False, menu=menu5)
     dbsession.add(item8)
+    item9 = models.Item(nombre='Crear cuentas', url='#!/registro', es_menu=False, menu=menu6)
+    dbsession.add(item9)
+    item10 = models.Item(nombre='Crear cuentas', url='#!/registro', es_menu=False, menu=menu7)
+    dbsession.add(item10)
+    item11 = models.Item(nombre='Crear cooperativa', url='#!/add-cooperativa', es_menu=False, menu=menu8)
+    dbsession.add(item11)
+    item12 = models.Item(nombre='Crear cooperativa', url='#!/add-cooperativa', es_menu=False, menu=menu9)
+    dbsession.add(item12)
+    item13 = models.Item(nombre='Crear unidad', url='#!/add-unidad', es_menu=False, menu=menu8)
+    dbsession.add(item13)
+    item14 = models.Item(nombre='Crear unidad', url='#!/add-unidad', es_menu=False, menu=menu9)
+    dbsession.add(item14)
 
     # User
-    u_administrador = models.User(name='admin', role='editor', rol=r_admin, grupo=administrador)
+    u_administrador = models.User(username='admin', 
+                                  nombre='Admin', 
+                                  apellido='Admin', 
+                                  email='admin@gmail.com', 
+                                  activo=True,
+                                  cod_verificacion=None,
+                                  grupo=administrador)
     u_administrador.set_password('admin')
     dbsession.add(u_administrador)
-    cooperativa_loja = models.User(name='loja', role='cooperativa',
-                         rol=r_cooperativa, grupo=cooperativa)
+    cooperativa_loja = models.User(username='loja', 
+                                   nombre='Loja',
+                                   apellido='Loja', 
+                                   email='loja@gmail.com', 
+                                   activo=True,
+                                   cod_verificacion=None,
+                                   grupo=cooperativa)
     cooperativa_loja.set_password('loja')
     dbsession.add(cooperativa_loja)
-    cooperativa_cariamanga = models.User(name='cariamanga', role='cooperativa',
-                                   rol=r_cooperativa, grupo=cooperativa)
+    cooperativa_cariamanga = models.User(username='cariamanga', 
+                                         nombre='Cariamanga',
+                                         apellido='Cariamanga', 
+                                         email='cariamanga@gmail.com', 
+                                         activo=True,
+                                         cod_verificacion=None,
+                                         grupo=cooperativa)
     cooperativa_cariamanga.set_password('cariamanga')
     dbsession.add(cooperativa_cariamanga)
-    basic = models.User(name='cliente', role='basic', rol=r_cliente, grupo=cliente)
-    basic.set_password('cliente')
+    basic = models.User(username='juan', 
+                        nombre='Juan', 
+                        apellido='Perez', 
+                        email='juanperez@gmail.com',
+                        activo=True,
+                        cod_verificacion=None,
+                        grupo=cliente)
+    basic.set_password('juan')
     dbsession.add(basic)
 
     # Sitio

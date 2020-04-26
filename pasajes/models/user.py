@@ -48,9 +48,12 @@ class User(Base):
     def set_password(self, pw):
         pwhash = bcrypt.hashpw(pw.encode('utf8'), bcrypt.gensalt())
         self.password_hash = pwhash.decode('utf8')
+        print(self.password_hash, pw)
     
+
     def set_cod_verificacion(self, cod):
         self.cod_verificacion = cod
+
 
     def check_password(self, pw):
         if self.password_hash is not None:
@@ -58,6 +61,15 @@ class User(Base):
             return bcrypt.checkpw(pw.encode('utf8'), expected_hash)
         return False
     
+    
+    def cambiar_password(self, pw_antiguo, pw_nuevo):
+        try:
+            self.check_password(pw_antiguo)
+            self.set_password(pw_nuevo)
+        except:
+            return False
+    
+
     def generar_codigo(self, tamanio):
         valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         crypto = SystemRandom()
@@ -66,13 +78,16 @@ class User(Base):
             passw = passw + crypto.choice(valores)
         return passw
 
+
     def generar_pass_temporal(self):
         pass_temporal = self.generar_codigo(enum.Codigo.TAMANIO_PASS_TEMPORAL.value)
         return pass_temporal
     
+
     def generar_cod_verificacion(self):
         pass_temporal = self.generar_codigo(enum.Codigo.TAMANIO_COD_VERIFICACION.value)
         return pass_temporal
+
 
     def enviar_mensaje(self, request, password, asunto=''):
 

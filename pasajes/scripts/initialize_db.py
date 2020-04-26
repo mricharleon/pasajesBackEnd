@@ -33,6 +33,10 @@ def setup_models(dbsession):
     dbsession.add(menu6)
     menu7 = models.Menu(nombre='Cuentas', url='', grupo=cooperativa)
     dbsession.add(menu7)
+    menu8 = models.Menu(nombre='Cooperativa', url='', grupo=administrador)
+    dbsession.add(menu8)
+    menu9 = models.Menu(nombre='Cooperativa', url='', grupo=cooperativa)
+    dbsession.add(menu9)
 
     # Item
     item1 = models.Item(nombre='Comprar boletos', url='#!/inicio', es_menu=False, menu=menu1)
@@ -59,6 +63,14 @@ def setup_models(dbsession):
     dbsession.add(item9)
     item10 = models.Item(nombre='Crear cuentas', url='#!/registro', es_menu=False, menu=menu7)
     dbsession.add(item10)
+    item11 = models.Item(nombre='Crear cooperativa', url='#!/add-cooperativa', es_menu=False, menu=menu8)
+    dbsession.add(item11)
+    item12 = models.Item(nombre='Crear cooperativa', url='#!/add-cooperativa', es_menu=False, menu=menu9)
+    dbsession.add(item12)
+    item13 = models.Item(nombre='Crear unidad', url='#!/add-unidad', es_menu=False, menu=menu8)
+    dbsession.add(item13)
+    item14 = models.Item(nombre='Crear unidad', url='#!/add-unidad', es_menu=False, menu=menu9)
+    dbsession.add(item14)
 
     # User
     u_administrador = models.User(username='admin', 

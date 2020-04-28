@@ -16,7 +16,7 @@ from .. api.pasajes import RepositorioPasaje
              request_method='GET',
              renderer='json')
 def get_boletos_api(request):
-    id_usuario = request.user.id
+    id_usuario = request.session.get('user').id
     boletos = RepositorioBoleto.all_boletos(request, id_usuario)
 
     return boletos
@@ -38,7 +38,7 @@ def add_boleto_api(request):
     except Exception as x:
         return Response( status=400, json_body={'msg':'No se pudo parsear tu petición POST como un JSON: ' + str(x)} )
 
-    id_usuario = request.user.id # id de usuario
+    id_usuario = request.session.get('user').id # id de usuario
     vm = CreateBoletoViewModel(id_usuario, boleto_data)
     vm.compute_details()
     if vm.errors:

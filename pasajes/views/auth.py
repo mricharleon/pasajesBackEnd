@@ -80,4 +80,6 @@ def logout(request):
 # Se dispara cuando la petición no pasa los permissions
 @forbidden_view_config()
 def forbidden_view(request):
-    return Response(status=401, json_body={'msg':'No tienes permisos para realizar eso!'})
+    u = request.session.get('user')
+    return Response(status=401, json_body={'msg':'No tienes permisos para realizar eso!',
+                                           'error':str(u.grupo.nombre)})

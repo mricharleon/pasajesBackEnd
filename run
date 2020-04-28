@@ -1,0 +1,14 @@
+#!/bin/bash
+
+python setup.py develop
+
+pip install --upgrade pip setuptools
+pip install -e ".[testing]"
+mkdir pasajes/alembic/versions
+/app/.heroku/python/lib/python3.6/site-packages/redis_server/bin/redis-server &
+
+# alembic -c production.ini revision --autogenerate -m "init"
+# alembic -c production.ini upgrade head
+# initialize_pasajes_db production.ini
+
+python runapp.py

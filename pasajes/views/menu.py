@@ -17,7 +17,7 @@ from .. api.usuarios import RepositorioUsario
              request_method='GET')
 def get_menu_api(request):
 
-    id_usuario = request.user.id
+    id_usuario = request.session.get('user').id
     usuario = RepositorioUsario.get_usuario(request, id_usuario)
     menu = RepositorioMenu.get_menu(request, usuario)
 

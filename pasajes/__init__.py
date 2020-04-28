@@ -1,7 +1,11 @@
+import os
+
 from pyramid.config import Configurator
 from pyramid.events import NewRequest
 
 from pyramid_redis_sessions import session_factory_from_settings
+
+from . import constants as enum
 
 
 def main(global_config, **settings):
@@ -26,8 +30,10 @@ def allow_cors(config):
             # log.trace("Adding CORS permission to request: {}".format(
             #     request.url
             # ))
+            # Importa la variable de client_url
+            CLIENT_URL = os.environ['CLIENT_URL'] if ('CLIENT_URL' in os.environ) else enum.FrontEnd.CLIENT_URL.value
             response.headers.update({
-                'Access-Control-Allow-Origin': 'http://localhost:9000',
+                'Access-Control-Allow-Origin': CLIENT_URL,
                 'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,HEAD,OPTIONS',
                 'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Accept-Language, X-Request-ID,Authorization',
                 'Access-Control-Allow-Credentials': 'true',

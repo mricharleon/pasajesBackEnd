@@ -8,8 +8,8 @@ from .. api.unidades import RepositorioUnidad
              permission='view')
 def get_unidades_api(request):
     
-    user = request.user
-    id_usuario = request.user.id
+    user = request.session.get('user')
+    id_usuario = request.session.get('user').id
     if user.grupo.nombre == 'Administrador':
         unidades = RepositorioUnidad.all_unidades(request)
     else:

@@ -16,6 +16,8 @@ requires = [
     'pyramid_redis_sessions',
     'pyramid_jinja2',
     'pyramid_debugtoolbar',
+    'paste',
+    'redis-server',
     'waitress',
     'psycopg2==2.7.5',
     'alembic',
@@ -35,7 +37,7 @@ tests_require = [
 
 setup(
     name='pasajes',
-    version='0.0',
+    version='0.0.1',
     description='pasajes',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
@@ -44,9 +46,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
-    author='',
-    author_email='',
-    url='',
+    author='mricharleon',
+    author_email='mricharleon@gmail.com',
+    url='https://pasajes-backend.herokuapp.com/',
     keywords='web pyramid pylons',
     packages=find_packages(),
     include_package_data=True,

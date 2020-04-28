@@ -4,6 +4,7 @@ from pyramid.security import (
 )
 
 def editor_factory(request):
+    u = request.session.get('user')
     return EditorResource()
 
 

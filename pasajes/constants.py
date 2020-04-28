@@ -12,5 +12,5 @@ class Usuario(Enum):
     GRUPO_CLIENTE = 'Cliente'
 
 class FrontEnd(Enum):
-    HOST = 'http://localhost:9000/#!/'
+    CLIENT_URL = 'http://localhost:9000'
 

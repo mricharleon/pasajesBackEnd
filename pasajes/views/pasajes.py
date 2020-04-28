@@ -19,7 +19,7 @@ from .. api.pasajes import RepositorioPasaje
 def get_all_pasajes_api(request):
 
     if request.user.grupo.nombre == 'Cooperativa':
-        id_usuario = request.user.id
+        id_usuario = request.session.get('user').id
         pasajes = RepositorioPasaje.get_all_pasajes_cooperativa(request, id_usuario)
     else:
         pasajes = RepositorioPasaje.get_all_pasajes(request)

@@ -1,7 +1,7 @@
 import bcrypt
 from random import SystemRandom
 
-import distutils
+import distutils.util as util
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -130,7 +130,7 @@ class User(Base):
                         .format(self.nombre, 
                                 self.username,
                                 password,
-                                enum.FrontEnd.HOST.value + 'activar/',
+                                enum.FrontEnd.CLIENT_URL.value + 'activar/',
                                 self.cod_verificacion
                                 )
         msg = MIMEMultipart('alternative')
@@ -143,7 +143,7 @@ class User(Base):
         server = smtplib.SMTP('{}: {}'.format(settings['email.host'], 
                                               settings['email.port'])
                                               )
-        if distutils.util.strtobool( settings['email.tls'] ):
+        if util.strtobool( settings['email.tls'] ):
             server.starttls()
         if not server.login(msg['From'], password):
             status = False
